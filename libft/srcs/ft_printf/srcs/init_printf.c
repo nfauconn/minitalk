@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/ft_printf.h"
+#include "ft_printf.h"
 
 void	init_fun_ptr(t_pf *pf)
 {

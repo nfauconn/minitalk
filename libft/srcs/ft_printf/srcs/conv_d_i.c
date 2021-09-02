@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/ft_printf.h"
+#include "ft_printf.h"
 
 static size_t		nb_to_array(t_conv *conv, char **str, int *i, size_t base)
 {

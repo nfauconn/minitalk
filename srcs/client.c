@@ -23,6 +23,7 @@
 
 int	main(int argc, char **argv)
 {
+	(void)argv;
 	if (argc != 3)
 	{
 		printf("wrong number of arguments\nformat : ./client <PID> <string_to_display>\n");

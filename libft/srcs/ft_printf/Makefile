@@ -10,73 +10,56 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	libftprintf.a
+NAME = libftprintf.a
+LIB = ../../libft.a
+LIBFT = ../../
+CC = clang
+CFLAGS = -Wall -Wextra -Werror
+INCLUDES = -I includes/ -I ../../includes/
+COMP = $(CC) $(CFLAGS) ${INCLUDES}
+RM = rm -rf
+CFILES = conv_c.c\
+		conv_s.c\
+		conv_p.c\
+		conv_d_i.c\
+		conv_u.c\
+		conv_x.c\
+		conv_mx.c\
+		conv_percent.c\
+		convert.c\
+		fill_nb.c\
+		ft_isflagpf.c\
+		ft_printf.c\
+		init_printf.c\
+		insert_into_buffer.c\
+		main_loop.c\
+		parse_printf.c
+SRCS = $(addprefix $(SRC_DIR)/,$(CFILES))
+OBJS = $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
+SRC_DIR  = ./srcs
+OBJ_DIR  = ./objs
 
-LIB_A	=	libft.a
-LIB =	../..
+all: ${NAME}
 
-OBJ_DIR		=	objs/
-SRC_DIR		=	srcs/
+$(NAME): makelib $(OBJS)
+	@ar rc ${NAME} $(LIB) ${OBJS}
+	@ranlib $(NAME)
+	@echo "lib_ftprintf created"
 
-SRC			= 	conv_c.c\
-				conv_s.c\
-				conv_p.c\
-				conv_d_i.c\
-				conv_u.c\
-				conv_x.c\
-				conv_mx.c\
-				conv_percent.c\
-				convert.c\
-				fill_nb.c\
-				ft_isflagpf.c\
-				ft_printf.c\
-				init_printf.c\
-				insert_into_buffer.c\
-				main_loop.c\
-				parse_printf.c\
+makelib:
+	@make -C $(LIBFT)
 
-INCLUDES	=	-I ./includes/
-
-
-CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror
-COMP		=	$(CC) $(CFLAGS) ${INCLUDES}
-RM			=	rm -rf
-
-OBJ			=	${SRC:%.c=%.o}
-SRC_PATH	=	$(SRC:%=$(SRC_DIR)%)
-OBJ_PATH =	${addprefix ${OBJ_DIR}, ${OBJ}}
-
-
-all :		${NAME}
-
-make_lib:
-				@make -C $(LIB)
-				@cp $(LIB)/*.a .
-
-$(OBJ_DIR):
-			@mkdir -p ${OBJ_DIR}
-
-$(OBJ):		${OBJ_DIR} 
-			@echo Create: $(@:obj/%=%)"\x1b[1A\x1b[M"
-			@${COMP} -c -o ${OBJ_DIR}$@ ${SRC_DIR}${@:%.o=%.c}
-
-${OBJ_PATH}:	
-				@${MAKE} ${OBJ}
-
-$(NAME): 	make_lib ${OBJ_PATH}
-			@libtool -static -o $(NAME) $(LIB_A) $(addprefix $(OBJ_DIR), $(OBJ))
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo create: $(@:%=%)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 clean:
-			@${RM} ${OBJ_DIR}
-				@make -C $(LIB) clean
+	@${RM} ${OBJ_DIR}
 
-fclean:		clean
-			@${RM} *.a
-			@make -C $(LIB) fclean
+fclean: clean
+	@${RM} $(NAME)
 
+re: fclean all
 
-re:			fclean all
-
-.PHONY:		all clean fclean re
-
+.PHONY: all clean fclean re

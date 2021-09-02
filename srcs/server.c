@@ -14,6 +14,6 @@
 
 int	main()
 {
-	printf("server ok\n");
+	ft_printf("server ok\n");
 	return (0);
 }

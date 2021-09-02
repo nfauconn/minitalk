@@ -14,7 +14,6 @@
 
 int	ft_atoi_base(const char *s, int base)
 {
-	int					sign;
 	unsigned long long	nbr;
 
 	nbr = 0;

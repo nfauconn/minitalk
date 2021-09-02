@@ -21,3 +21,5 @@ void	*ft_memalloc(size_t size)
 	ft_bzero(ret, size);
 	return (ret);
 }
+
+

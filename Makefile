@@ -1,8 +1,12 @@
 NAME = minitalk
+LIBFT = libft/
+LIBFT_PRINTF = ./libft/srcs/ft_printf/
+LIB = libft/libft.a libft/srcs/ft_printf/libftprintf.a
+OBJ_LIB = libft/srcs/ft_printf/objs libft/objs
 SERVER = server
 CLIENT = client
 CC = clang
-INCLUDES = -I includes/
+INCLUDES = -I includes/ -I libft/includes/ -I libft/srcs/ft_printf/includes
 CFLAGS	= -Wall -Wextra -Werror
 FILES_SERVER = server.c
 FILES_CLIENT = client.c
@@ -15,26 +19,33 @@ OBJ_DIR  = ./objs
 
 all: $(NAME)
 
-${NAME}: $(SERVER) $(CLIENT)
+${NAME}: makelib $(SERVER) $(CLIENT)
+
+makelib: 
+	@make -C $(LIBFT)
+	@make -C $(LIBFT_PRINTF)
 
 $(SERVER): $(OBJS_SERVER)
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS_SERVER) -o $(SERVER)
-	@echo create: $(@:%=%)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(LIB) $(OBJS_SERVER) -o $(SERVER)
 	@echo "$(SERVER) created"
 
 $(CLIENT): $(OBJS_CLIENT)
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS_CLIENT) -o $(CLIENT)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(LIB) $(OBJS_CLIENT) -o $(CLIENT)
 	@echo "$(CLIENT) created"
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
+	@echo create: $(@:%=%)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDES)
 
 clean:
-	rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR) $(OBJ_LIB)
+	@echo "objs deleted"
 
 fclean: clean
-	rm -rf $(SERVER) $(CLIENT)
+	@rm -rf $(SERVER) $(CLIENT)
+	@echo "server and client deleted"
+	@make fclean -C $(LIBFT)
 
 re: fclean all
 
