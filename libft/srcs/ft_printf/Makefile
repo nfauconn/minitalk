@@ -35,7 +35,7 @@ SRC			= 	conv_c.c\
 				main_loop.c\
 				parse_printf.c\
 
-INCLUDES	=	-I ../../../includes/ft_printf.h
+INCLUDES	=	-I ./includes/
 
 
 CC			=	clang
