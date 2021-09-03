@@ -26,11 +26,12 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 3)
 	{
-		printf("wrong number of arguments\nformat : ./client <PID> <string_to_display>\n");
+		ft_printf("wrong number of arguments\nformat : ./client <PID> <string_to_display>\n");
 		exit(EXIT_FAILURE);
 	}
 	else
-		printf("ok\n");
+		ft_printf("ok\n");
 //		send_signal(argv);
+	ft_isdigit('q');
 	return (0);
 }
