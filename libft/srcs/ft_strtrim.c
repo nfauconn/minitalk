@@ -39,7 +39,8 @@ char			*ft_strtrim(char const *s1, char const *set)
 	len = ft_strlen(s1);
 	while (len != 0 && ft_checkset(set, s1[len - 1]))
 		len--;
-	if (!(str = (char*)malloc(sizeof(char) * (len + 1))))
+	str = (char *)malloc(sizeof (char) * (len + 1));
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (i < len)

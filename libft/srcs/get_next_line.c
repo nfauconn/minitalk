@@ -39,8 +39,8 @@ static int	ft_read(int fd, char **over, char **rest)
 	int		ret;
 	char	*buff;
 
-	if (!(buff = malloc(sizeof(char) * (BUFFER_SIZE + 1)))
-			|| read(fd, buff, 0) < 0)
+	buff = (char *)malloc(sizeof (char) * (BUFFER_SIZE + 1));
+	if (!buff || read(fd, buff, 0) < 0)
 		return (-1);
 	if (!*over)
 		*over = ft_strdup("");

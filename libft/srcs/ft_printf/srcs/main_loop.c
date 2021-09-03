@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int				main_loop(t_pf *pf, va_list *ap)
+int	main_loop(t_pf *pf, va_list *ap)
 {
 	while (*pf->format)
 	{

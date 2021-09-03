@@ -20,7 +20,7 @@ static void	nb_to_array(t_conv *conv, char **str, unsigned int *i)
 		*str = ft_ulltoa_base(*i, 16, 0);
 }
 
-void		conv_x(va_list *ap, t_conv *conv)
+void	conv_x(va_list *ap, t_conv *conv)
 {
 	unsigned int		i;
 	char				*str;

@@ -24,14 +24,16 @@ char			*ft_substr(char const *s, unsigned int start, size_t len)
 		len = s_len - start;
 	if (start > s_len)
 	{
-		if (!(new = (char*)malloc(sizeof(char) * 1)))
+		new = (char *)malloc(sizeof (char) * 1);
+		if (!new)
 			return (NULL);
 		new[0] = '\0';
 		return (new);
 	}
-	if (!(new = (char*)malloc(sizeof(char) * (len + 1))))
+	new = (char *)malloc(sizeof (char) * (len + 1));
+	if (!new)
 		return (NULL);
-	new = (char*)ft_memcpy(new, s + start, len + 1);
+	new = (char *)ft_memcpy(new, s + start, len + 1);
 	new[len] = '\0';
 	return (new);
 }

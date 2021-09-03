@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void		fill_width(t_conv *conv, size_t *to_copy)
+static void	fill_width(t_conv *conv, size_t *to_copy)
 {
 	if (conv->is_width && conv->width > conv->len)
 	{
@@ -29,7 +29,7 @@ static void		fill_width(t_conv *conv, size_t *to_copy)
 		conv->to_conv = ft_memalloc(*to_copy + 1);
 }
 
-void			conv_p(va_list *ap, t_conv *conv)
+void	conv_p(va_list *ap, t_conv *conv)
 {
 	char				*str;
 	char				*tmp;
@@ -37,7 +37,7 @@ void			conv_p(va_list *ap, t_conv *conv)
 	size_t				to_copy;
 
 	tmp = NULL;
-	i = (void*)va_arg(*ap, void*);
+	i = (void *)va_arg(*ap, void *);
 	str = ft_strdup("0x");
 	tmp = ft_ulltoa_base((t_ull)i, 16, 0);
 	ft_strfjoin(&str, tmp);

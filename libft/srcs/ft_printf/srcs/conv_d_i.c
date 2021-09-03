@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static size_t		nb_to_array(t_conv *conv, char **str, int *i, size_t base)
+static size_t	nb_to_array(t_conv *conv, char **str, int *i, size_t base)
 {
 	size_t	is_neg;
 
@@ -32,7 +32,7 @@ static size_t		nb_to_array(t_conv *conv, char **str, int *i, size_t base)
 	return (is_neg);
 }
 
-static void			fill_sign(t_conv *conv, size_t is_neg, size_t *sign)
+static void	fill_sign(t_conv *conv, size_t is_neg, size_t *sign)
 {
 	*sign = 1;
 	if (is_neg)
@@ -41,7 +41,7 @@ static void			fill_sign(t_conv *conv, size_t is_neg, size_t *sign)
 		conv->sign = (conv->if_positive > 2) ? '+' : ' ';
 }
 
-void				conv_d_i(va_list *ap, t_conv *conv)
+void	conv_d_i(va_list *ap, t_conv *conv)
 {
 	int		i;
 	char	*str;

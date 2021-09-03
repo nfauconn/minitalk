@@ -54,14 +54,15 @@ static char	*negative_case(int num, char *str, int i, int count)
 	return (str);
 }
 
-char		*ft_itoa(int num)
+char	*ft_itoa(int num)
 {
-	char		*str;
-	int			count;
-	int			i;
+	char	*str;
+	int		count;
+	int		i;
 
 	count = ft_count(num);
-	if (!(str = (char *)malloc((count + 1) * sizeof(char))))
+	str = (char *)malloc((count + 1) * sizeof (char));
+	if (!str)
 		return (NULL);
 	i = count - 1;
 	if (num == 0)
@@ -80,32 +81,3 @@ char		*ft_itoa(int num)
 	str[count] = '\0';
 	return (str);
 }
-
-
-/*char			*ft_itoa(int n)
-{
-	char	*nombre;
-	int		i;
-	long	nb;
-
-	nb = (long)n;
-	i = ft_nbrlen_base(nb, 10) + 1;
-	if (!(nombre = (char*)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	nombre[i--] = '\0';
-	if (nb == 0)
-		nombre[i] = '0';
-	else if (nb < 0)
-	{
-		nombre[0] = '-';
-		nb = -nb;
-	}
-	while (nb > 0)
-	{
-		nombre[i--] = (nb % 10 + '0');
-		nb = nb / 10;
-	}
-	return (nombre);
-}*/

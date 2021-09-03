@@ -41,13 +41,9 @@ OBJ_DIR  = ./objs
 
 all: ${NAME}
 
-$(NAME): makelib $(OBJS)
-	@ar rc ${NAME} $(LIB) ${OBJS}
-	@ranlib $(NAME)
+$(NAME): $(OBJS)
+	@libtool -static -o $(NAME) $(OBJS)
 	@echo "lib_ftprintf created"
-
-makelib:
-	@make -C $(LIBFT)
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)

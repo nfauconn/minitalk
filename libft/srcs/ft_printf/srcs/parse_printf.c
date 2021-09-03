@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void		set_flags(t_pf *pf, t_conv *conv)
+static void	set_flags(t_pf *pf, t_conv *conv)
 {
 	while (*pf->ptr == '-' || *pf->ptr == '0' || *pf->ptr == '+'
 										|| *pf->ptr == ' ' || *pf->ptr == '#')
@@ -31,7 +31,7 @@ static void		set_flags(t_pf *pf, t_conv *conv)
 	}
 }
 
-static void		set_width(t_pf *pf, t_conv *conv, va_list *ap)
+static void	set_width(t_pf *pf, t_conv *conv, va_list *ap)
 {
 	int		w;
 
@@ -50,7 +50,7 @@ static void		set_width(t_pf *pf, t_conv *conv, va_list *ap)
 			conv->width = (conv->width * 10) + (*pf->ptr++ - '0');
 }
 
-static void		set_prec(t_pf *pf, t_conv *conv, va_list *ap)
+static void	set_prec(t_pf *pf, t_conv *conv, va_list *ap)
 {
 	int		p;
 
@@ -71,7 +71,7 @@ static void		set_prec(t_pf *pf, t_conv *conv, va_list *ap)
 			conv->prec = (conv->prec * 10) + (*pf->ptr++ - '0');
 }
 
-void			parse_flag(t_pf *pf, t_conv *conv, va_list *ap)
+void	parse_flag(t_pf *pf, t_conv *conv, va_list *ap)
 {
 	while (*pf->ptr && (ft_isflagpf(*pf->ptr)
 									|| ft_isdigit(*pf->ptr)))
@@ -89,7 +89,7 @@ void			parse_flag(t_pf *pf, t_conv *conv, va_list *ap)
 	}
 }
 
-int				parse_conv(t_pf *pf)
+int	parse_conv(t_pf *pf)
 {
 	int	i;
 

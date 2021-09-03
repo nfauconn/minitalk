@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void			convert(va_list *ap, t_pf *pf)
+void	convert(va_list *ap, t_pf *pf)
 {
 	t_conv	conv;
 

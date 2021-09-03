@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void		nb_to_array(t_conv *conv, char **str, unsigned int *i)
+static void	nb_to_array(t_conv *conv, char **str, unsigned int *i)
 {
 	if (*i == 0 && conv->is_prec && conv->prec == 0)
 		*str = ft_strdup("");
@@ -20,7 +20,7 @@ static void		nb_to_array(t_conv *conv, char **str, unsigned int *i)
 		*str = ft_ulltoa_base(*i, 10, 0);
 }
 
-void			conv_u(va_list *ap, t_conv *conv)
+void	conv_u(va_list *ap, t_conv *conv)
 {
 	unsigned int	i;
 	char			*str;

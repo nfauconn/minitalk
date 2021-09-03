@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void		conv_mx(va_list *ap, t_conv *conv)
+void	conv_mx(va_list *ap, t_conv *conv)
 {
 	size_t	len;
 	int		i;

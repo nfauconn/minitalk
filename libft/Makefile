@@ -58,8 +58,7 @@ OBJ_DIR  = ./objs
 all : ${NAME}
 
 $(NAME): $(OBJS)
-	@ar rc ${NAME} ${OBJS}
-	@ranlib $(NAME)
+	@libtool -static -o $(NAME) $(OBJS)
 	@echo "lib created"
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c

@@ -24,14 +24,15 @@ static void	fill_width(t_conv *conv, size_t to_copy)
 		ft_memset(conv->to_conv, ' ', conv->len);
 }
 
-void		conv_s(va_list *ap, t_conv *conv)
+void	conv_s(va_list *ap, t_conv *conv)
 {
 	char	*str;
 	size_t	i;
 	size_t	to_copy;
 
 	i = 0;
-	if (!(str = (char*)va_arg(*ap, char *)))
+	str = (char *)va_arg(*ap, char *);
+	if (!str)
 	{
 		str = ft_strdup("(null)");
 		i = 1;

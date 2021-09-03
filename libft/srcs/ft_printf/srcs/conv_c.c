@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void		set_width(t_conv *conv, char c)
+static void	set_width(t_conv *conv, char c)
 {
 	conv->len = conv->width;
 	conv->to_conv = ft_memalloc(conv->len + 1);
@@ -27,7 +27,7 @@ static void		set_width(t_conv *conv, char c)
 	}
 }
 
-void			conv_c(va_list *ap, t_conv *conv)
+void	conv_c(va_list *ap, t_conv *conv)
 {
 	unsigned char	c;
 

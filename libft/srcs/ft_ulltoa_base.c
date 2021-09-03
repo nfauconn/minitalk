@@ -24,7 +24,8 @@ char	*ft_ulltoa_base(unsigned long long n, int base, size_t maj)
 	len = ft_nbrlen_base(n, base);
 	if (n == 0)
 		return (ft_strdup("0"));
-	if (!(ret = (char*)ft_memalloc(len + 1)))
+	ret = (char *)ft_memalloc(len + 1);
+	if (!ret)
 		return (NULL);
 	while (n)
 	{

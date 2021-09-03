@@ -45,10 +45,10 @@ void	init_conv(t_conv *conv)
 
 void	init_pf(t_pf *pf, const char *format)
 {
-	pf->format = (char*)format;
+	pf->format = (char *)format;
 	pf->buffer = NULL;
 	pf->bufsize = 0;
-	pf->ptr = (char*)format;
+	pf->ptr = (char *)format;
 	pf->index_conv = -1;
 	pf->bufalloc = 0;
 	init_fun_ptr(pf);

@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-#include <stdio.h>
 
-static int		str_nb(char const *s, char c)
+static int	str_nb(char const *s, char c)
 {
 	int		i;
 	int		str_nb;
@@ -33,7 +32,7 @@ static int		str_nb(char const *s, char c)
 	return (str_nb);
 }
 
-static int		str_len(const char *s, char c)
+static int	str_len(const char *s, char c)
 {
 	int i;
 
@@ -43,7 +42,7 @@ static int		str_len(const char *s, char c)
 	return (i);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**tab;
 	int		index;
@@ -52,13 +51,15 @@ char			**ft_split(char const *s, char c)
 
 	index = 0;
 	i = 0;
-	if ((!s) || !(tab = malloc(sizeof(s) * (str_nb(s, c) + 1))))
+	tab = (char **)malloc(sizeof (char *) * (str_nb(s, c) + 1));
+	if (!s || !tab)
 		return (NULL);
 	while (s[i] && (index < str_nb(s, c)))
 	{
 		while (s[i] == c)
 			i++;
-		if (!(tab[index] = malloc(sizeof(char) * (str_len(s + i, c) + 1))))
+		tab[index] = (char *)malloc(sizeof (char) * (str_len(s + i, c) + 1));
+		if (!tab[index])
 			return (NULL);
 		j = 0;
 		while (s[i] && s[i] != c)

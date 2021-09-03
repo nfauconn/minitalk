@@ -19,9 +19,9 @@ OBJ_DIR  = ./objs
 
 all: $(NAME)
 
-${NAME}: makelib $(SERVER) $(CLIENT)
+${NAME}: makelibs $(SERVER) $(CLIENT)
 
-makelib: 
+makelibs: 
 	@make -C $(LIBFT)
 	@make -C $(LIBFT_PRINTF)
 
