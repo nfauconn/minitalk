@@ -14,6 +14,10 @@
 
 int	main()
 {
-	ft_printf("server ok\n");
+	ft_printf("%d\n", getpid());
+	while (1)
+	{
+		NULL;
+	}
 	return (0);
 }

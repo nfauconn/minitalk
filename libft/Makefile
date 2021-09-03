@@ -3,7 +3,7 @@ FT_PRINTF = srcs/ft_printf
 CC	 = clang
 CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I includes/
-COMP = $(CC) $(CFLAGS) ${INCLUDES}
+COMP = ${CC} ${CFLAGS} ${INCLUDES}
 RM	 = rm -rf
 CFILES = ft_atoi.c \
 		ft_atoi_base.c\
@@ -50,30 +50,30 @@ CFILES = ft_atoi.c \
 		rev_int_tab.c \
 		sort_int_tab.c \
 
-SRCS = $(addprefix $(SRC_DIR)/,$(CFILES))
-OBJS = $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
+SRCS = ${addprefix ${SRC_DIR}/,${CFILES}}
+OBJS = ${addprefix ${OBJ_DIR}/,${CFILES:.c=.o}}
 SRC_DIR  = ./srcs
 OBJ_DIR  = ./objs
 
 all : ${NAME}
 
-$(NAME): $(OBJS)
-	@libtool -static -o $(NAME) $(OBJS)
+${NAME}: ${OBJS}
+	@libtool -static -o ${NAME} ${OBJS}
 	@echo "lib created"
 
-$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	@echo create: $(@:%=%)
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+${OBJ_DIR}/%.o:${SRC_DIR}/%.c
+	@mkdir -p ${OBJ_DIR}
+	@echo create: ${@:%=%}
+	@${CC} ${CFLAGS} ${INCLUDES} -o $@ -c $<
 
 clean:
 	@${RM} ${OBJ_DIR}
-	@make clean -C $(FT_PRINTF)
+	@make clean -C ${FT_PRINTF}
 	@echo "objs lib deleted"
 
 fclean: clean
-	@${RM} $(NAME)
-	@make fclean -C $(FT_PRINTF)
+	@${RM} ${NAME}
+	@make fclean -C ${FT_PRINTF}
 	@echo "lib deleted"
 			
 re: fclean all

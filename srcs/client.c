@@ -12,26 +12,67 @@
 
 #include "minitalk.h"
 
-/*void	send_signal(char **argv)
+void	error()
 {
-	int	sig_num;
-	int	str;
+	ft_printf("\nwrong arguments\nformat : ./client <PID> <string_to_display>\n\n");
+	exit(EXIT_FAILURE);
+}
 
-	sig_num = ft_atoi(argv[1]);
-	str = ft_atoi_base(argv[2]);
-}*/
+int	get_pid(char *str)
+{
+	pid_t	pid;
+	char	*tmp;
+
+	tmp = str;
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			error();
+		str++;
+	}
+	str = tmp;
+	pid = ft_atoi(str);
+ft_printf("pid : %d\n");
+	return (pid);
+}
+
+void	send_signal(pid_t pid, char *to_display)
+{
+	int	i;
+	int	c;
+
+	if (!to_display)
+		error();
+	while (to_display)
+	{
+		i = 0;
+		c = *to_display;
+		while (i < 8)
+		{
+			if (c & 1)
+				kill(pid, SIGUSR2);
+			else
+				kill(pid, SIGUSR1);
+			c = c >> 1;
+			usleep(100);
+			i++;
+		}
+		to_display++;
+	}
+}
 
 int	main(int argc, char **argv)
 {
-	(void)argv;
+	pid_t	pid;
+	char	*to_display;
+
 	if (argc != 3)
-	{
-		ft_printf("wrong number of arguments\nformat : ./client <PID> <string_to_display>\n");
-		exit(EXIT_FAILURE);
-	}
+		error();
 	else
-		ft_printf("ok\n");
-//		send_signal(argv);
-	ft_isdigit('q');
+	{
+		pid = get_pid(argv[1]);
+		to_display = argv[2];
+		send_signal(pid, to_display);
+	}
 	return (0);
 }

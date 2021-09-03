@@ -16,7 +16,7 @@ LIBFT = ../../
 CC = clang
 CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I includes/ -I ../../includes/
-COMP = $(CC) $(CFLAGS) ${INCLUDES}
+COMP = ${CC} ${CFLAGS} ${INCLUDES}
 RM = rm -rf
 CFILES = conv_c.c\
 		conv_s.c\
@@ -34,27 +34,27 @@ CFILES = conv_c.c\
 		insert_into_buffer.c\
 		main_loop.c\
 		parse_printf.c
-SRCS = $(addprefix $(SRC_DIR)/,$(CFILES))
-OBJS = $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
+SRCS = ${addprefix ${SRC_DIR}/,${CFILES}}
+OBJS = ${addprefix ${OBJ_DIR}/,${CFILES:.c=.o}}
 SRC_DIR  = ./srcs
 OBJ_DIR  = ./objs
 
 all: ${NAME}
 
-$(NAME): $(OBJS)
-	@libtool -static -o $(NAME) $(OBJS)
+${NAME}: ${OBJS}
+	@libtool -static -o ${NAME} ${OBJS}
 	@echo "lib_ftprintf created"
 
-$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	@echo create: $(@:%=%)
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+${OBJ_DIR}/%.o:${SRC_DIR}/%.c
+	@mkdir -p ${OBJ_DIR}
+	@echo create: ${@:%=%}
+	@${CC} ${CFLAGS} ${INCLUDES} -o $@ -c $<
 
 clean:
 	@${RM} ${OBJ_DIR}
 
 fclean: clean
-	@${RM} $(NAME)
+	@${RM} ${NAME}
 
 re: fclean all
 
