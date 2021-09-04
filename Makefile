@@ -26,7 +26,7 @@ makelibs:
 	@make -C ${LIBFT_PRINTF}
 
 ${SERVER}: ${OBJS_SERVER}
-	@${CC} ${CFLAGS} ${INCLUDES} ${LIB} ${OBJS_SERVER} -o ${SERVER}
+	@${CC} -g ${CFLAGS} ${INCLUDES} ${LIB} ${OBJS_SERVER} -o ${SERVER}
 	@echo "${SERVER} created"
 
 ${CLIENT}: ${OBJS_CLIENT}

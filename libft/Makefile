@@ -49,6 +49,7 @@ CFILES = ft_atoi.c \
 		get_next_line.c \
 		rev_int_tab.c \
 		sort_int_tab.c \
+		str_isdigit.c \
 
 SRCS = ${addprefix ${SRC_DIR}/,${CFILES}}
 OBJS = ${addprefix ${OBJ_DIR}/,${CFILES:.c=.o}}

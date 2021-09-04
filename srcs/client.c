@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 17:09:26 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/01 18:16:40 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/04 15:52:38 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,13 @@ void	error()
 	exit(EXIT_FAILURE);
 }
 
-int	get_pid(char *str)
+pid_t	get_pid(char *str)
 {
 	pid_t	pid;
-	char	*tmp;
 
-	tmp = str;
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			error();
-		str++;
-	}
-	str = tmp;
+	if (!str_isdigit(str))
+		error();
 	pid = ft_atoi(str);
-ft_printf("pid : %d\n");
 	return (pid);
 }
 
@@ -43,7 +35,7 @@ void	send_signal(pid_t pid, char *to_display)
 
 	if (!to_display)
 		error();
-	while (to_display)
+	while (*to_display)
 	{
 		i = 0;
 		c = *to_display;
