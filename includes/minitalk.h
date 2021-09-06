@@ -20,4 +20,6 @@
 # include "libft.h"
 # include "ft_printf.h"
 
+void    error(char *s);
+
 #endif

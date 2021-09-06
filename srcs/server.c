@@ -19,20 +19,26 @@ void	*signal_handler(int sig_num)
 	if (sig_num == SIGUSR1)
 	{
 		sig_num = 0;
-		ft_printf("sigsur1 exec = %d\n", sig_num);
+		ft_printf("sigsur1 received = %d\n", sig_num);
 	}
 	if (sig_num == SIGUSR2)
 	{
 		sig_num = 1;
-		ft_printf("sigusr2 exec = %d\n", sig_num);	
+		ft_printf("sigusr2 received = %d\n", sig_num);	
 	}
+	
 	return ("sig");
 }
 
-int	main()
+int	main(int argc, char **argv)
 {
 	struct sigaction	s;
 
+	(void)argv;
+	if (argc != 2)
+	{
+		error('s');
+	}
 	ft_printf("%d\n", getpid());
 	s.sa_handler = signal_handler(SIGUSR1);
 	s.sa_handler = signal_handler(SIGUSR2);

@@ -1,0 +1,47 @@
+void	send_signal(pid_t pid, char *to_display)
+{
+	int	i;
+	int	shift;
+
+	if (!to_display)
+		error('c');
+	ft_printf("to_display in server prgm :%s\n", to_display);
+	shift = -1;
+	i = 0;
+	while (to_display[i])
+	{
+		ft_printf("%c[%d]\n", to_display[i], to_display[i]);
+		while (++shift < 8)
+		{
+			if (to_display[i] & 0x80 >> shift)
+			{
+				printf("1\n");
+				kill(pid, SIGUSR2);
+			}
+			else
+			{
+				printf("0\n");
+				kill(pid, SIGUSR1);
+			}
+			usleep(3);
+		}
+		ft_printf("\n");
+		i++;
+	}
+}
+
+int	main(int argc, char **argv)
+{
+	pid_t	pid;
+	char	*to_display;
+
+	if (argc != 3)
+		error('c');
+	else
+	{
+		pid = get_pid(argv[1]);
+		to_display = argv[2];
+		send_signal(pid, to_display);
+	}
+	return (0);
+}

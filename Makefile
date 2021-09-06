@@ -8,12 +8,19 @@ CLIENT = client
 CC = clang
 INCLUDES = -I includes/ -I libft/includes/ -I libft/srcs/ft_printf/includes
 CFLAGS	= -Wall -Wextra -Werror
+
 FILES_SERVER = server.c
 FILES_CLIENT = client.c
+FILES_SHARED = error.c
+
 SRCS_SERVER = ${addprefix ${SRC_DIR}/,${FILES_SERVER}}
 SRCS_CLIENT = ${addprefix ${SRC_DIR}/,${FILES_CLIENT}}
+SRCS_SHARED = ${addprefix ${SRC_DIR}/,${FILES_SHARED}}
+
 OBJS_SERVER = ${addprefix ${OBJ_DIR}/,${FILES_SERVER:.c=.o}}
 OBJS_CLIENT = ${addprefix ${OBJ_DIR}/,${FILES_CLIENT:.c=.o}}
+OBJS_SHARED = ${addprefix ${OBJ_DIR}/,${FILES_SHARED:.c=.o}}
+
 SRC_DIR  = ./srcs
 OBJ_DIR  = ./objs
 
@@ -25,12 +32,12 @@ makelibs:
 	@make -C ${LIBFT}
 	@make -C ${LIBFT_PRINTF}
 
-${SERVER}: ${OBJS_SERVER}
-	@${CC} -g ${CFLAGS} ${INCLUDES} ${LIB} ${OBJS_SERVER} -o ${SERVER}
+${SERVER}: ${OBJS_SERVER} ${OBJS_SHARED}
+	@${CC} -g ${CFLAGS} ${INCLUDES} ${LIB} ${OBJS_SERVER} ${OBJS_SHARED} -o ${SERVER}
 	@echo "${SERVER} created"
 
-${CLIENT}: ${OBJS_CLIENT}
-	@${CC} ${CFLAGS} ${INCLUDES} ${LIB} ${OBJS_CLIENT} -o ${CLIENT}
+${CLIENT}: ${OBJS_CLIENT} ${OBJS_SHARED}
+	@${CC} ${CFLAGS} ${INCLUDES} ${LIB} ${OBJS_CLIENT} ${OBJS_SHARED} -o ${CLIENT}
 	@echo "${CLIENT} created"
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c
