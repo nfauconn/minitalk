@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 17:09:26 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/04 15:52:38 by nfauconn         ###   ########.fr       */
-/*                                                                            */
+/* */
+/*  :::::::::::*/
+/*client.c :+::+: :+:*/
+/* +:+ +:++:+  */
+/*By: nfauconn <marvin@42.fr>  +#+  +:+ +#+  */
+/*+#+#+#+#+#++#+  */
+/*Created: 2021/09/01 17:09:26 by nfauconn #+# #+# */
+/*Updated: 2021/09/04 15:52:38 by nfauconn###########.fr */
+/* */
 /* ************************************************************************** */
 
 #include "minitalk.h"
@@ -28,28 +28,45 @@ pid_t	get_pid(char *str)
 	return (pid);
 }
 
+/*
+**By using the number 128 we get a binary number that has one 1 at the leftmost bit and then only 0 (10000000). 
+**We then compare - by using the & operator - 128 with the number associated to the character we want client to send to server.
+**
+**This operator will return a 0 if the first bit of that character is zero, and it will return 128 if the first bit is one.
+**
+**Then the program will no longer use 128. Instead it will use the number 64 (128 >> 1 = 64). The number 64 is mostly 0, 
+**save the second leftmost bit that is 1 (01000000). This will enable the program to get the character's second leftmost bit value.
+*/
+
 void	send_signal(pid_t pid, char *to_display)
 {
 	int	i;
-	int	c;
+	int	shift;
 
 	if (!to_display)
 		error();
-	while (*to_display)
+	ft_printf("to_display in server prgm :%s\n", to_display);
+	shift = -1;
+	i = 0;
+	while (to_display[i])
 	{
-		i = 0;
-		c = *to_display;
-		while (i < 8)
+		ft_printf("%c[%d]\n", to_display[i], to_display[i]);
+		while (++shift < 8)
 		{
-			if (c & 1)
+			if (to_display[i] & 0x80 >> shift)
+			{
+				printf("1\n");
 				kill(pid, SIGUSR2);
+			}
 			else
+			{
+				printf("0\n");
 				kill(pid, SIGUSR1);
-			c = c >> 1;
-			usleep(100);
-			i++;
+			}
+			usleep(3);
 		}
-		to_display++;
+		ft_printf("\n");
+		i++;
 	}
 }
 

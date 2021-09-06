@@ -12,21 +12,30 @@
 
 #include "minitalk.h"
 
+//https://github.com/mlanca-c/Minitalk/wiki/Projecct#1st-step-make-server-receive-a-signal-from-client
+
 void	*signal_handler(int sig_num)
 {
-	ft_printf("sig_num = %d\n", sig_num);
-	return ("lol");
+	if (sig_num == SIGUSR1)
+	{
+		sig_num = 0;
+		ft_printf("sigsur1 exec = %d\n", sig_num);
+	}
+	if (sig_num == SIGUSR2)
+	{
+		sig_num = 1;
+		ft_printf("sigusr2 exec = %d\n", sig_num);	
+	}
+	return ("sig");
 }
 
-int	main(int argc, char **argv)
+int	main()
 {
-	int 				sig_num;
 	struct sigaction	s;
 
-	(void)argc;
 	ft_printf("%d\n", getpid());
-	s.sa_handler = signal_handler(sig_num);
-	sigaction(SIGUSR1, &s, NULL);
+	s.sa_handler = signal_handler(SIGUSR1);
+	s.sa_handler = signal_handler(SIGUSR2);
 	while (1)
 	{
 		pause();
