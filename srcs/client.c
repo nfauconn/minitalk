@@ -17,30 +17,34 @@ pid_t	get_pid(char *nb)
 	pid_t	pid;
 
 	if (!str_isdigit(nb))
-		error("wrong arguments\nformat : ./client <PID> <message>\n");
+		error("wrong arguments\nformat : ./client <PID> <message>");
 	pid = ft_atoi(nb);
 	if (pid <= 0 || pid > 32768)
-		error("wrong PID\n");
+		error("wrong PID");
 	return (pid);
 }
 
-void	send_signals(char *message)
+void	send_signals(char *message, pid_t pid)
 {
+	int		i;
 	int		bitshift;
 	int		comparator;
 
+	i = 0;
 	bitshift = -1;
-	comparator = 0x80;
-	ft_printf("%c[%d]: ", message[0], message[0]);
-	while (++bitshift < 8)
+	while (message[i])
 	{
-		comparator = comparator >> bitshift;
-		if (message[0] & comparator)
-			ft_printf("1");
-		else
-			ft_printf("0");
+		while (++bitshift < 8)
+		{
+			comparator = 0x80 >> bitshift;
+			if (message[i] & comparator)
+				kill(pid, SIGUSR2);
+			else
+				kill(pid, SIGUSR1);
+			usleep(3);
+		}
+		i++;
 	}
-	ft_printf("\n");
 }
 
 int	main(int argc, char **argv)
@@ -48,8 +52,8 @@ int	main(int argc, char **argv)
 	pid_t	pid;
 
 	if (argc != 3)
-		error("wrong arguments\nformat : ./client <PID> <message>\n");
+		error("wrong arguments\nformat : ./client <PID> <message>");
 	pid = get_pid(argv[1]);
-	send_signals(argv[2]);
+	send_signals(argv[2], pid);
 	return (0);
 }

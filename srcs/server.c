@@ -14,37 +14,34 @@
 
 //https://github.com/mlanca-c/Minitalk/wiki/Projecct#1st-step-make-server-receive-a-signal-from-client
 
-void	*signal_handler(int sig_num)
+void	signal_handler(int sig_num)
 {
-	if (sig_num == SIGUSR1)
-	{
-		sig_num = 0;
-		ft_printf("sigsur1 received = %d\n", sig_num);
-	}
 	if (sig_num == SIGUSR2)
 	{
 		sig_num = 1;
 		ft_printf("sigusr2 received = %d\n", sig_num);	
 	}
-	
-	return ("sig");
+	if (sig_num == SIGUSR1)
+	{
+		sig_num = 0;
+		ft_printf("sigsur1 received = %d\n", sig_num);
+	}
 }
 
 int	main(int argc, char **argv)
 {
-	struct sigaction	s;
+	struct sigaction	sig_act;
 
+	if (argc != 1)
+		error("no arguments needed");
 	(void)argv;
-	if (argc != 2)
-	{
-		error('s');
-	}
 	ft_printf("%d\n", getpid());
-	s.sa_handler = signal_handler(SIGUSR1);
-	s.sa_handler = signal_handler(SIGUSR2);
+    sigemptyset(&sig_act.sa_mask);
+    sig_act.sa_handler = signal_handler;
+    sig_act.sa_flags = 0;
+    sigaction(SIGUSR1, &sig_act, NULL);
+    sigaction(SIGUSR2, &sig_act, NULL);
 	while (1)
-	{
 		pause();
-	}
 	return (0);
 }
