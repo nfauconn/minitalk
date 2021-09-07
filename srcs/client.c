@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/* */
-/*  :::::::::::*/
-/*client.c :+::+: :+:*/
-/* +:+ +:++:+  */
-/*By: nfauconn <marvin@42.fr>  +#+  +:+ +#+  */
-/*+#+#+#+#+#++#+  */
-/*Created: 2021/09/01 17:09:26 by nfauconn #+# #+# */
-/*Updated: 2021/09/04 15:52:38 by nfauconn###########.fr */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/07 15:11:48 by leo               #+#    #+#             */
+/*   Updated: 2021/09/07 17:55:59 by leo              ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
@@ -27,6 +27,7 @@ pid_t	get_pid(char *nb)
 void	send_signals(char *message, pid_t pid)
 {
 	int		i;
+	int		kill_exec;
 	int		bitshift;
 	int		comparator;
 
@@ -38,12 +39,21 @@ void	send_signals(char *message, pid_t pid)
 		{
 			comparator = 0x80 >> bitshift;
 			if (message[i] & comparator)
-				kill(pid, SIGUSR2);
+			{
+				kill_exec = kill(pid, SIGUSR2);
+				if (kill_exec == -1)
+					error("an error occured while sending signal\nplease verify PID");
+			}
 			else
-				kill(pid, SIGUSR1);
+			{
+				kill_exec = kill(pid, SIGUSR1);
+				if (kill_exec == -1)
+					error("an error occured while sending signal\nplease verify PID");
+			}
 			usleep(3);
 		}
 		i++;
+		bitshift = -1;
 	}
 }
 
@@ -55,5 +65,6 @@ int	main(int argc, char **argv)
 		error("wrong arguments\nformat : ./client <PID> <message>");
 	pid = get_pid(argv[1]);
 	send_signals(argv[2], pid);
+	ft_printf("\nmessage sent successfully\n\n");
 	return (0);
 }

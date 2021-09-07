@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 17:09:29 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/04 17:06:37 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/07 17:46:43 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,19 @@
 
 void	signal_handler(int sig_num)
 {
+	static char	c = 255;
+	static int	bits = 0;
+
 	if (sig_num == SIGUSR2)
+		c = c | (0x80 >> bits);
+	else if (sig_num == SIGUSR1)
+		c = c ^ (0x80 >> bits);
+	bits++;
+	if (bits == 8)
 	{
-		sig_num = 1;
-		ft_printf("sigusr2 received = %d\n", sig_num);	
-	}
-	if (sig_num == SIGUSR1)
-	{
-		sig_num = 0;
-		ft_printf("sigsur1 received = %d\n", sig_num);
+		ft_printf("%c", c);
+		c = 255;
+		bits = 0;
 	}
 }
 
@@ -43,5 +47,6 @@ int	main(int argc, char **argv)
     sigaction(SIGUSR2, &sig_act, NULL);
 	while (1)
 		pause();
+	free(&sig_act);
 	return (0);
 }
