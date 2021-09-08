@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 16:24:05 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 10:52:53 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:29:35 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	get_next_line(int fd, char **line)
 {
 	static char	*over[10240];
 	size_t		ret;
-	char		*rest[fd];
+	char		*rest[10240];
 	size_t		len;
 
 	rest[fd] = NULL;
