@@ -6,7 +6,7 @@
 #    By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 21:07:04 by nfauconn          #+#    #+#              #
-#    Updated: 2021/09/08 11:13:01 by nfauconn         ###   ########.fr        #
+#    Updated: 2021/09/08 19:16:58 by nfauconn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ OBJ_DIR  = ./objs
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	@libtool -static -o ${NAME} ${OBJS}
+	@ar rc ${NAME} ${OBJS}
+	@ranlib ${NAME}	
 	@echo "lib_ftprintf created"
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c
