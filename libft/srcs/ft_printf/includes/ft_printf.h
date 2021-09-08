@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 17:34:52 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/08/17 17:43:57 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 11:46:39 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@
 # define CONV "cspdiuxX%"
 # define FLAGS "-0.*123456789"
 # define BUFFSIZE 3
+# define PTR pf->ptr
+# define TO_CONV conv->to_conv
+# define SIGN conv->sign
+# define ZERO_PADDED conv->zero_padded
+# define SPACES conv->nb_spaces
+# define ZEROS conv->nb_zeros
+# define LEN conv->len
+# define HASHTAG conv->hashtag
+# define IF_POSITIVE conv->if_positive
+# define PREC conv->prec
+# define IS_PREC conv->is_prec
+# define WIDTH conv->width
+# define IS_WIDTH conv->is_width
+# define LEFT conv->left
 
 enum
 {
@@ -35,12 +49,11 @@ enum
 	x,
 	mx,
 	percent,
-	end_enum,
 };
 
 typedef unsigned long long	t_ull;
 
-typedef struct	s_conv
+typedef struct s_conv
 {
 	size_t	left;
 	size_t	zero_padded;
@@ -52,13 +65,12 @@ typedef struct	s_conv
 	char	sign;
 	size_t	hashtag;
 	size_t	len;
-	size_t	size;
 	char	*to_conv;
 	size_t	nb_spaces;
 	size_t	nb_zeros;
 }				t_conv;
 
-typedef struct	s_pf
+typedef struct s_pf
 {
 	char	*format;
 	char	*buffer;
@@ -66,7 +78,7 @@ typedef struct	s_pf
 	char	*ptr;
 	int		index_conv;
 	size_t	bufalloc;
-	void	(*fun_ptr[end_enum])(va_list *, t_conv *);
+	void	(*fun_ptr[9])(va_list *, t_conv *);
 }				t_pf;
 
 int				ft_printf(const char *str, ...);
@@ -82,7 +94,7 @@ void			conv_u(va_list *ap, t_conv *conv);
 void			conv_x(va_list *ap, t_conv *conv);
 void			conv_mx(va_list *ap, t_conv *conv);
 void			conv_percent(va_list *ap, t_conv *conv);
-void			nb_spaces_zeros(t_conv *conv, size_t sign);
+void			spaces_zeros(t_conv *conv, size_t sign);
 void			fill_without_pw(t_conv *conv, char *str, size_t sign);
 void			fill_with_pw(t_conv *conv, const char *str, size_t sign);
 int				main_loop(t_pf *pf, va_list *ap);

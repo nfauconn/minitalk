@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:53:30 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/08/18 12:22:05 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 10:47:29 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char *dest;
-	char *source;
-	char *lastd;
-	char *lasts;
+	char	*dest;
+	char	*source;
+	char	*lastd;
+	char	*lasts;
 
 	if (dst == NULL && src == NULL)
 		return (NULL);

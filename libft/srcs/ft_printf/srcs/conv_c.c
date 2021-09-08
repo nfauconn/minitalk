@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 21:20:43 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/08/18 15:38:50 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 11:46:21 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void	set_width(t_conv *conv, char c)
 {
-	conv->len = conv->width;
-	conv->to_conv = ft_memalloc(conv->len + 1);
-	ft_memset(conv->to_conv, ' ', conv->len);
-	if (conv->left)
-		conv->to_conv[0] = c;
+	LEN = WIDTH;
+	TO_CONV = ft_memalloc(LEN + 1);
+	ft_memset(TO_CONV, ' ', LEN);
+	if (LEFT)
+		TO_CONV[0] = c;
 	else
 	{
-		if (conv->zero_padded)
-			ft_memset(conv->to_conv, '0', conv->len);
-		conv->to_conv[conv->len - 1] = c;
+		if (ZERO_PADDED)
+			ft_memset(TO_CONV, '0', LEN);
+		TO_CONV[LEN - 1] = c;
 	}
 }
 
@@ -32,12 +32,12 @@ void	conv_c(va_list *ap, t_conv *conv)
 	unsigned char	c;
 
 	c = (unsigned char)va_arg(*ap, int);
-	if (conv->is_width && conv->width > 1)
+	if (IS_WIDTH && WIDTH > 1)
 		set_width(conv, c);
 	else
 	{
-		conv->len = 1;
-		conv->to_conv = ft_memalloc(2);
-		conv->to_conv[conv->len - 1] = c;
+		LEN = 1;
+		TO_CONV = ft_memalloc(2);
+		TO_CONV[LEN - 1] = c;
 	}
 }

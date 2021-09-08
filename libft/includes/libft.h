@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:22:20 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/04 15:40:02 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 11:13:01 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int			ft_atoi(const char *s);
-int         ft_atoi_base(const char *s, int base);
+int			ft_atoi_base(const char *s, int base);
 void		*ft_calloc(size_t count, size_t size);
 char		*ft_strdup(const char *s1);
 void		ft_strfdup(char **over, char *buff);

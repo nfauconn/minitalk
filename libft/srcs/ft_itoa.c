@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 17:01:03 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/08/18 12:22:05 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 10:45:57 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,27 @@ static int	ft_count(int num)
 		count++;
 	}
 	if (!count)
+	{
 		while (num > 0)
 		{
 			num /= 10;
 			count++;
 		}
+	}
 	else
+	{
 		while (neg > 0)
 		{
 			neg /= 10;
 			count++;
 		}
+	}
 	return (count);
 }
 
 static char	*negative_case(int num, char *str, int i, int count)
 {
-	int neg;
+	int	neg;
 
 	str[0] = '-';
 	neg = -num;
@@ -68,16 +72,16 @@ char	*ft_itoa(int num)
 	if (num == 0)
 		str[0] = '0';
 	if (num < 0)
-	{
 		return (negative_case(num, str, i, count));
-	}
 	else
+	{
 		while (num > 0)
 		{
 			str[i] = '0' + (num % 10);
 			num = num / 10;
 			i--;
 		}
+	}
 	str[count] = '\0';
 	return (str);
 }

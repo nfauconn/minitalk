@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 16:24:05 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/08/18 12:24:34 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 10:52:53 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,35 @@ static int	ft_read(int fd, char **over, char **rest)
 		return (-1);
 	if (!*over)
 		*over = ft_strdup("");
-	while (!(*rest = line_return(*over))
-			&& (ret = read(fd, buff, BUFFER_SIZE)) > 0)
+	*rest = line_return(*over);
+	ret = read(fd, buff, BUFFER_SIZE);
+	while (!*rest && ret > 0)
 	{
 		buff[ret] = '\0';
 		fill_over(over, ft_strjoin(*over, buff));
+		*rest = line_return(*over);
+		ret = read(fd, buff, BUFFER_SIZE);
 	}
 	free(buff);
 	return (ret);
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
-	static char	*over[OPEN_MAX];
+	static char	*over[10240];
 	size_t		ret;
 	char		*rest[fd];
 	size_t		len;
 
 	rest[fd] = NULL;
-	if (fd > OPEN_MAX || fd < 0 || !line || BUFFER_SIZE < 1
-			|| (ret = (ft_read(fd, &over[fd], &rest[fd])) < 0))
+	ret = ft_read(fd, &over[fd], &rest[fd]);
+	if (fd > OPEN_MAX || fd < 0 || !line || BUFFER_SIZE < 1 || (ret < 0))
 		return (-1);
 	*line = ft_substr(over[fd], 0, rest[fd] - over[fd]);
 	len = ft_strlen(over[fd]) - ft_strlen(*line);
 	fill_over(&over[fd], ft_substr(over[fd], rest[fd] - over[fd] + 1, len));
-	ret = ((ret == 0 && len > 0) || ret > 0) ? 1 : ret;
+	if ((ret == 0 && len > 0) || ret > 0)
+		ret = 1;
 	if (ret <= 0)
 	{
 		free(over[fd]);

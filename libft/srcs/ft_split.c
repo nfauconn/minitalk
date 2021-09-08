@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 12:58:22 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/08/18 12:22:05 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 10:48:15 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	str_nb(char const *s, char c)
 {
-	int		i;
-	int		str_nb;
+	int	i;
+	int	str_nb;
 
 	i = 0;
 	while (s[i] && (s[i] == c))
@@ -34,7 +34,7 @@ static int	str_nb(char const *s, char c)
 
 static int	str_len(const char *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] != c && s[i])
