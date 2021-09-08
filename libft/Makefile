@@ -61,6 +61,7 @@ all : ${NAME}
 
 ${NAME}: ${OBJS}
 	@ar rc ${NAME} ${OBJS}
+	@ranlib ${NAME}
 	@echo "lib created"
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c

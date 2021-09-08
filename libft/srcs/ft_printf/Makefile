@@ -6,7 +6,7 @@
 #    By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 21:07:04 by nfauconn          #+#    #+#              #
-#    Updated: 2021/09/08 19:19:03 by nfauconn         ###   ########.fr        #
+#    Updated: 2021/09/08 19:24:01 by nfauconn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ all: ${NAME}
 
 ${NAME}: ${OBJS}
 	@ar rc ${NAME} ${OBJS}
+	@ranlib ${NAME}	
 	@echo "lib_ftprintf created"
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c
