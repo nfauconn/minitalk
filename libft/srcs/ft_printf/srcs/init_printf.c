@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 23:15:32 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 12:20:34 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:03:22 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	init_conv(t_conv *conv)
 	conv->hashtag = 0;
 	conv->len = 0;
 	conv->str = NULL;
-	conv->nb_spaces = 0;
-	conv->nb_zeros = 0;
+	conv->nb_s = 0;
+	conv->nb_z = 0;
 }
 
 void	init_pf(t_pf *pf, const char *format)

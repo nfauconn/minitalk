@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 19:37:36 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 12:20:34 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:05:31 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	set_flags(t_pf *pf, t_conv *conv)
 {
-	char c;
+	char	c;
 
 	c = *pf->ptr;
 	while (c == '-' || c == '0' || c == '+' || c == ' ' || c == '#')
@@ -90,7 +90,9 @@ void	parse_flag(t_pf *pf, t_conv *conv, va_list *ap)
 			set_flags(pf, conv);
 		if (ft_isdigit(*pf->ptr) || *pf->ptr == '*')
 			set_width(pf, conv, ap);
-		if (*pf->ptr == '-' || *pf->ptr == '+' || *pf->ptr == ' ' || *pf->ptr == '#')
+		if (*pf->ptr == '-' || *pf->ptr == '+')
+			set_flags(pf, conv);
+		if (*pf->ptr == ' ' || *pf->ptr == '#')
 			set_flags(pf, conv);
 		if (*pf->ptr == '.')
 			set_prec(pf, conv, ap);

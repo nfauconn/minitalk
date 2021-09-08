@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 21:22:49 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 12:20:34 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:03:28 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	conv_d_i(va_list *ap, t_conv *conv)
 		return ;
 	}
 	spaces_zeros(conv, sign);
-	conv->str = ft_memalloc(conv->len + conv->nb_spaces + sign + conv->nb_zeros + 1);
+	conv->str = ft_memalloc(conv->len + conv->nb_s + sign + conv->nb_z + 1);
 	fill_with_pw(conv, str, sign);
 	free(str);
 }

@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 17:01:03 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 12:37:25 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:01:05 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_itoa(int num)
 	int		count;
 	int		i;
 
-	count = (int)ft_nbrlen_base(num, 10);
+	count = ft_nbrlen_base(num, 10);
 	str = (char *)malloc((count + 1) * sizeof (char));
 	if (!str)
 		return (NULL);

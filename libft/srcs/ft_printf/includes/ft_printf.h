@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 17:34:52 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 12:21:18 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:03:22 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ typedef struct s_conv
 	size_t	hashtag;
 	size_t	len;
 	char	*str;
-	size_t	nb_spaces;
-	size_t	nb_zeros;
+	size_t	nb_s;
+	size_t	nb_z;
 }				t_conv;
 
 typedef struct s_pf

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:11:39 by leo               #+#    #+#             */
-/*   Updated: 2021/09/07 15:11:40 by leo              ###   ########.fr       */
+/*   Updated: 2021/09/08 16:55:55 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void    error(char *s)
+void	error(char *s)
 {
-    if (s)
-        ft_printf("\n%s\n\n", s);
-    exit(EXIT_FAILURE);
+	if (s)
+		ft_printf("\n%s\n\n", s);
+	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 22:55:51 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 12:20:15 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:03:06 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	fill_width(t_conv *conv, size_t to_copy)
 	conv->len = conv->width;
 	conv->str = ft_memalloc(conv->width + 1);
 	if (!conv->left)
-		conv->nb_spaces = conv->width - to_copy;
+		conv->nb_s = conv->width - to_copy;
 	if (conv->zero_padded && !conv->left)
 		ft_memset(conv->str, '0', conv->len);
 	else
@@ -45,7 +45,7 @@ void	conv_s(va_list *ap, t_conv *conv)
 		fill_width(conv, to_copy);
 	else
 		conv->str = ft_memalloc(conv->len + 1);
-	ft_memcpy(conv->str + conv->nb_spaces, str, to_copy);
+	ft_memcpy(conv->str + conv->nb_s, str, to_copy);
 	if (i == 1)
 		free(str);
 }
