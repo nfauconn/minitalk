@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 23:15:32 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 11:46:50 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:20:34 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ void	init_fun_ptr(t_pf *pf)
 
 void	init_conv(t_conv *conv)
 {
-	LEFT = 0;
-	ZERO_PADDED = 0;
-	IS_WIDTH = 0;
-	WIDTH = 0;
-	IS_PREC = 0;
-	PREC = 0;
-	IF_POSITIVE = 0;
-	SIGN = 0;
-	HASHTAG = 0;
-	LEN = 0;
-	TO_CONV = NULL;
-	SPACES = 0;
-	ZEROS = 0;
+	conv->left = 0;
+	conv->zero_padded = 0;
+	conv->is_width = 0;
+	conv->width = 0;
+	conv->is_prec = 0;
+	conv->prec = 0;
+	conv->if_positive = 0;
+	conv->sign = 0;
+	conv->hashtag = 0;
+	conv->len = 0;
+	conv->str = NULL;
+	conv->nb_spaces = 0;
+	conv->nb_zeros = 0;
 }
 
 void	init_pf(t_pf *pf, const char *format)

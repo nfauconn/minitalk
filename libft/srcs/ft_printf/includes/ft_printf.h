@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 17:34:52 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 11:46:39 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:21:18 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,6 @@
 # define CONV "cspdiuxX%"
 # define FLAGS "-0.*123456789"
 # define BUFFSIZE 3
-# define PTR pf->ptr
-# define TO_CONV conv->to_conv
-# define SIGN conv->sign
-# define ZERO_PADDED conv->zero_padded
-# define SPACES conv->nb_spaces
-# define ZEROS conv->nb_zeros
-# define LEN conv->len
-# define HASHTAG conv->hashtag
-# define IF_POSITIVE conv->if_positive
-# define PREC conv->prec
-# define IS_PREC conv->is_prec
-# define WIDTH conv->width
-# define IS_WIDTH conv->is_width
-# define LEFT conv->left
 
 enum
 {
@@ -65,7 +51,7 @@ typedef struct s_conv
 	char	sign;
 	size_t	hashtag;
 	size_t	len;
-	char	*to_conv;
+	char	*str;
 	size_t	nb_spaces;
 	size_t	nb_zeros;
 }				t_conv;

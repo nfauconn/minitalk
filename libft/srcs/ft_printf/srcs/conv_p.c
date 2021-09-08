@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 22:50:29 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 11:46:21 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:20:15 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static void	fill_width(t_conv *conv, size_t *to_copy)
 {
-	if (IS_WIDTH && WIDTH > LEN)
+	if (conv->is_width && conv->width > conv->len)
 	{
-		LEN = WIDTH;
-		TO_CONV = ft_memalloc(LEN + 1);
-		if (!LEFT)
-			SPACES = WIDTH - *to_copy;
-		if (ZERO_PADDED && !LEFT)
-			ft_memset(TO_CONV, '0', LEN);
+		conv->len = conv->width;
+		conv->str = ft_memalloc(conv->len + 1);
+		if (!conv->left)
+			conv->nb_spaces = conv->width - *to_copy;
+		if (conv->zero_padded && !conv->left)
+			ft_memset(conv->str, '0', conv->len);
 		else
-			ft_memset(TO_CONV, ' ', LEN);
+			ft_memset(conv->str, ' ', conv->len);
 	}
 	else
-		TO_CONV = ft_memalloc(*to_copy + 1);
+		conv->str = ft_memalloc(*to_copy + 1);
 }
 
 void	conv_p(va_list *ap, t_conv *conv)
@@ -42,9 +42,9 @@ void	conv_p(va_list *ap, t_conv *conv)
 	tmp = ft_ulltoa_base((t_ull)i, 16, 0);
 	ft_strfjoin(&str, tmp);
 	free(tmp);
-	LEN = ft_strlen(str);
-	to_copy = LEN;
+	conv->len = ft_strlen(str);
+	to_copy = conv->len;
 	fill_width(conv, &to_copy);
-	ft_memcpy(TO_CONV + SPACES, str, to_copy);
+	ft_memcpy(conv->str + conv->nb_spaces, str, to_copy);
 	free(str);
 }

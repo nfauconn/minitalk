@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 22:55:51 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 11:46:21 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:20:15 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static void	fill_width(t_conv *conv, size_t to_copy)
 {
-	LEN = WIDTH;
-	TO_CONV = ft_memalloc(WIDTH + 1);
-	if (!LEFT)
-		SPACES = WIDTH - to_copy;
-	if (ZERO_PADDED && !LEFT)
-		ft_memset(TO_CONV, '0', LEN);
+	conv->len = conv->width;
+	conv->str = ft_memalloc(conv->width + 1);
+	if (!conv->left)
+		conv->nb_spaces = conv->width - to_copy;
+	if (conv->zero_padded && !conv->left)
+		ft_memset(conv->str, '0', conv->len);
 	else
-		ft_memset(TO_CONV, ' ', LEN);
+		ft_memset(conv->str, ' ', conv->len);
 }
 
 void	conv_s(va_list *ap, t_conv *conv)
@@ -37,15 +37,15 @@ void	conv_s(va_list *ap, t_conv *conv)
 		str = ft_strdup("(null)");
 		i = 1;
 	}
-	LEN = ft_strlen(str);
-	if (IS_PREC && PREC < LEN)
-		LEN = PREC;
-	to_copy = LEN;
-	if (IS_WIDTH && WIDTH > LEN)
+	conv->len = ft_strlen(str);
+	if (conv->is_prec && conv->prec < conv->len)
+		conv->len = conv->prec;
+	to_copy = conv->len;
+	if (conv->is_width && conv->width > conv->len)
 		fill_width(conv, to_copy);
 	else
-		TO_CONV = ft_memalloc(LEN + 1);
-	ft_memcpy(TO_CONV + SPACES, str, to_copy);
+		conv->str = ft_memalloc(conv->len + 1);
+	ft_memcpy(conv->str + conv->nb_spaces, str, to_copy);
 	if (i == 1)
 		free(str);
 }

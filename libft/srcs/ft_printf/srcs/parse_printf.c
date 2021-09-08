@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 19:37:36 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 11:48:58 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:20:34 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ static void	set_flags(t_pf *pf, t_conv *conv)
 {
 	char c;
 
-	c = *PTR;
+	c = *pf->ptr;
 	while (c == '-' || c == '0' || c == '+' || c == ' ' || c == '#')
 	{
 		if (c == '-')
-			LEFT = 1;
+			conv->left = 1;
 		if (c == '0')
-			ZERO_PADDED = 1;
+			conv->zero_padded = 1;
 		if (c == '+')
-			IF_POSITIVE = 3;
-		if (c == ' ' && IF_POSITIVE != 3)
-			IF_POSITIVE = 2;
+			conv->if_positive = 3;
+		if (c == ' ' && conv->if_positive != 3)
+			conv->if_positive = 2;
 		if (c == '#')
-			HASHTAG = 1;
-		PTR++;
-		c = *PTR;
+			conv->hashtag = 1;
+		pf->ptr++;
+		c = *pf->ptr;
 	}
 }
 
@@ -38,61 +38,61 @@ static void	set_width(t_pf *pf, t_conv *conv, va_list *ap)
 {
 	int		w;
 
-	IS_WIDTH = 1;
-	if (*PTR == '*')
+	conv->is_width = 1;
+	if (*pf->ptr == '*')
 	{
 		w = (int)va_arg(*ap, int);
 		if (!w)
-			WIDTH = 0;
+			conv->width = 0;
 		if (w < 0)
 		{
-			LEFT = 1;
-			WIDTH = -w;
+			conv->left = 1;
+			conv->width = -w;
 		}
 		else
-			WIDTH = w;
-		PTR++;
+			conv->width = w;
+		pf->ptr++;
 	}
 	else
-		while (*PTR && ft_isdigit(*PTR))
-			WIDTH = (WIDTH * 10) + (*PTR++ - '0');
+		while (*pf->ptr && ft_isdigit(*pf->ptr))
+			conv->width = (conv->width * 10) + (*pf->ptr++ - '0');
 }
 
 static void	set_prec(t_pf *pf, t_conv *conv, va_list *ap)
 {
 	int		p;
 
-	IS_PREC = 1;
-	PTR++;
-	if (*PTR == '*')
+	conv->is_prec = 1;
+	pf->ptr++;
+	if (*pf->ptr == '*')
 	{
 		p = (int)va_arg(*ap, int);
 		if (!p)
-			PREC = 0;
+			conv->prec = 0;
 		if (p < 0)
-			IS_PREC = 0;
+			conv->is_prec = 0;
 		else
-			PREC = p;
-		PTR++;
+			conv->prec = p;
+		pf->ptr++;
 	}
 	else
-		while (*PTR && ft_isdigit(*PTR))
-			PREC = (PREC * 10) + (*PTR++ - '0');
+		while (*pf->ptr && ft_isdigit(*pf->ptr))
+			conv->prec = (conv->prec * 10) + (*pf->ptr++ - '0');
 }
 
 void	parse_flag(t_pf *pf, t_conv *conv, va_list *ap)
 {
-	while (*PTR && (ft_isflagpf(*PTR) || ft_isdigit(*PTR)))
+	while (*pf->ptr && (ft_isflagpf(*pf->ptr) || ft_isdigit(*pf->ptr)))
 	{
-		if (*PTR == '-' || *PTR == '0' || *PTR == '+')
+		if (*pf->ptr == '-' || *pf->ptr == '0' || *pf->ptr == '+')
 			set_flags(pf, conv);
-		if (*PTR == ' ' || *PTR == '#')
+		if (*pf->ptr == ' ' || *pf->ptr == '#')
 			set_flags(pf, conv);
-		if (ft_isdigit(*PTR) || *PTR == '*')
+		if (ft_isdigit(*pf->ptr) || *pf->ptr == '*')
 			set_width(pf, conv, ap);
-		if (*PTR == '-' || *PTR == '+' || *PTR == ' ' || *PTR == '#')
+		if (*pf->ptr == '-' || *pf->ptr == '+' || *pf->ptr == ' ' || *pf->ptr == '#')
 			set_flags(pf, conv);
-		if (*PTR == '.')
+		if (*pf->ptr == '.')
 			set_prec(pf, conv, ap);
 	}
 }
@@ -102,12 +102,12 @@ int	parse_conv(t_pf *pf)
 	int	i;
 
 	i = 0;
-	while (*PTR && CONV[i])
+	while (*pf->ptr && CONV[i])
 	{
-		if (CONV[i] == *PTR)
+		if (CONV[i] == *pf->ptr)
 		{
 			pf->index_conv = i;
-			PTR++;
+			pf->ptr++;
 			return (i);
 		}
 		i++;

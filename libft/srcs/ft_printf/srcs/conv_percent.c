@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 22:53:24 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 11:46:21 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:20:15 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 void	conv_percent(va_list *ap, t_conv *conv)
 {
 	(void)ap;
-	if (IS_WIDTH && WIDTH > 1)
+	if (conv->is_width && conv->width > 1)
 	{
-		LEN = WIDTH;
-		TO_CONV = ft_memalloc(LEN + 1);
-		if (ZERO_PADDED && !LEFT)
-			ft_memset(TO_CONV, '0', LEN);
+		conv->len = conv->width;
+		conv->str = ft_memalloc(conv->len + 1);
+		if (conv->zero_padded && !conv->left)
+			ft_memset(conv->str, '0', conv->len);
 		else
-			ft_memset(TO_CONV, ' ', LEN);
-		if (LEFT)
-			TO_CONV[0] = '%';
+			ft_memset(conv->str, ' ', conv->len);
+		if (conv->left)
+			conv->str[0] = '%';
 		else
-			TO_CONV[LEN - 1] = '%';
+			conv->str[conv->len - 1] = '%';
 	}
 	else
 	{
-		LEN = 1;
-		TO_CONV = ft_memalloc(2);
-		TO_CONV[0] = '%';
+		conv->len = 1;
+		conv->str = ft_memalloc(2);
+		conv->str[0] = '%';
 	}
 }

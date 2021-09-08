@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 23:17:49 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 11:48:16 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:20:15 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,49 @@
 
 void	spaces_zeros(t_conv *conv, size_t sign)
 {
-	if (PREC <= LEN && WIDTH > (LEN + sign))
+	if (conv->prec <= conv->len && conv->width > (conv->len + sign))
 	{
-		SPACES = WIDTH - LEN - sign;
-		if (ZERO_PADDED && !LEFT && !IS_PREC)
+		conv->nb_spaces = conv->width - conv->len - sign;
+		if (conv->zero_padded && !conv->left && !conv->is_prec)
 		{
-			ZEROS = SPACES;
-			SPACES = 0;
+			conv->nb_zeros = conv->nb_spaces;
+			conv->nb_spaces = 0;
 		}
 	}
-	else if (PREC > LEN)
+	else if (conv->prec > conv->len)
 	{
-		if (WIDTH > (PREC + sign))
-			SPACES = WIDTH - PREC - sign;
-		ZEROS = PREC - LEN;
+		if (conv->width > (conv->prec + sign))
+			conv->nb_spaces = conv->width - conv->prec - sign;
+		conv->nb_zeros = conv->prec - conv->len;
 	}
 }
 
 void	fill_without_pw(t_conv *conv, char *str, size_t sign)
 {
-	LEN += sign;
-	TO_CONV = ft_memalloc(LEN + 1);
+	conv->len += sign;
+	conv->str = ft_memalloc(conv->len + 1);
 	if (sign)
-		ft_memset(TO_CONV, SIGN, 1);
-	ft_memcpy(TO_CONV + sign, str, LEN);
+		ft_memset(conv->str, conv->sign, 1);
+	ft_memcpy(conv->str + sign, str, conv->len);
 }
 
 void	fill_with_pw(t_conv *conv, const char *str, size_t sign)
 {
-	if (LEFT)
+	if (conv->left)
 	{
 		if (sign)
-			ft_memset(TO_CONV, SIGN, 1);
-		ft_memset(TO_CONV + sign, '0', ZEROS);
-		ft_memcpy(TO_CONV + sign + ZEROS, str, LEN);
-		ft_memset(TO_CONV + sign + ZEROS + LEN, ' ', SPACES);
+			ft_memset(conv->str, conv->sign, 1);
+		ft_memset(conv->str + sign, '0', conv->nb_zeros);
+		ft_memcpy(conv->str + sign + conv->nb_zeros, str, conv->len);
+		ft_memset(conv->str + sign + conv->nb_zeros + conv->len, ' ', conv->nb_spaces);
 	}
 	else
 	{
-		ft_memset(TO_CONV, ' ', SPACES);
+		ft_memset(conv->str, ' ', conv->nb_spaces);
 		if (sign)
-			ft_memset(TO_CONV + SPACES, SIGN, 1);
-		ft_memset(TO_CONV + SPACES + sign, '0', ZEROS);
-		ft_memcpy(TO_CONV + SPACES + sign + ZEROS, str, LEN + sign);
+			ft_memset(conv->str + conv->nb_spaces, conv->sign, 1);
+		ft_memset(conv->str + conv->nb_spaces + sign, '0', conv->nb_zeros);
+		ft_memcpy(conv->str + conv->nb_spaces + sign + conv->nb_zeros, str, conv->len + sign);
 	}
-	LEN += SPACES + sign + ZEROS;
+	conv->len += conv->nb_spaces + sign + conv->nb_zeros;
 }

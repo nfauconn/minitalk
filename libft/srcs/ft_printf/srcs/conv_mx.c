@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 21:27:43 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 11:42:16 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:18:47 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	conv_mx(va_list *ap, t_conv *conv)
 	int		i;
 
 	i = 0;
-	if (HASHTAG)
+	if (conv->hashtag)
 		conv_p(ap, conv);
 	else
 		conv_x(ap, conv);
-	len = LEN;
+	len = conv->len;
 	while (len--)
 	{
-		TO_CONV[i] = ft_toupper(TO_CONV[i]);
+		conv->str[i] = ft_toupper(conv->str[i]);
 		i++;
 	}
 }
