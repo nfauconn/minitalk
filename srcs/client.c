@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:11:48 by leo               #+#    #+#             */
-/*   Updated: 2021/09/08 19:05:32 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/08 19:08:26 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ pid_t	get_pid(char *nb)
 static void	send_bit(char letter, int comparator, pid_t pid)
 {
 	int	kill_exec;
-	
+
 	if (letter & comparator)
 	{
 		kill_exec = kill(pid, SIGUSR2);
