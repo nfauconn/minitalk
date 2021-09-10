@@ -3,26 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:11:48 by leo               #+#    #+#             */
-/*   Updated: 2021/09/08 19:08:26 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/10 13:02:55 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-pid_t	get_pid(char *nb)
+/*pid_t	get_pid(char *nb)
 {
 	pid_t	pid;
 
 	if (!str_isdigit(nb))
 		error("wrong arguments\nformat : ./client <PID> <message>");
 	pid = ft_atoi(nb);
-	if (pid <= 0 || pid > 32768)
-		error("wrong PID");
 	return (pid);
-}
+}*/
 
 static void	send_bit(char letter, int comparator, pid_t pid)
 {
@@ -74,7 +72,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 		error("wrong arguments\nformat : ./client <PID> <message>");
-	pid = get_pid(argv[1]);
+	pid = ft_atoi(argv[1]);
 	send_signals(argv[2], pid);
 	ft_printf("\nmessage sent successfully\n\n");
 	return (0);

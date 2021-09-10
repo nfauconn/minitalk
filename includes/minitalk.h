@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 17:10:50 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/08 10:06:35 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/10 13:54:02 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 # include "ft_printf.h"
 
 void	error(char *s);
+void	error_server(int pid, char *str);
 
 #endif
