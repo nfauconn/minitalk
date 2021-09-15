@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 17:09:29 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/10 14:05:29 by leo              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minitalk.h"
 
@@ -24,7 +13,7 @@ static char	*init_buff(char c)
 	return (buff);
 }
 
-static void	signal_handler(int sig_num, siginfo_t *info, void *context)
+static void	ft_action(int sig_num, siginfo_t *info, void *context)
 {
 	static char	c = 0xFF;
 	static int	bits = 0;
@@ -39,57 +28,46 @@ static void	signal_handler(int sig_num, siginfo_t *info, void *context)
 	else if (sig_num == SIGUSR1)
 		c = c ^ (0x80 >> bits);
 	bits++;
+	ft_printf("pid = %d\n", pid);
+	ft_printf("bits = %d\n", bits);
+	ft_printf("send sigusr1\n");
+	if (!kill(pid, SIGUSR1))
+		error("error while sending aknowledgment of receipt of bit\n");
 	if (bits == 8)
 	{
 		if (!buff)
 			buff = init_buff(c);
 		else
 			buff = strfjoinchar(buff, c);
+		ft_printf("buff : %s\n", buff);
 		if (!c)
 		{
+			ft_printf("good, null recu\n");
 			ft_printf("%s", buff);
-			buff = NULL;
 			free(buff);
+			buff = NULL;
 		}
 		c = 0xFF;
 		bits = 0;
+		ft_printf("send sigusr2\n");
+		if (!kill(pid, SIGUSR2))
+			error("error while sending aknowledgment of receipt of char\n");
 	}
-	kill(pid, SIGUSR1);
+	usleep(100);
 }
 
 int	main(int argc, char **argv)
 {
-/*	struct sigaction	sig_act;
-	sigset_t 			block_mask;
-
+	struct sigaction action;
 
 	if (argc != 1)
 		error("no arguments needed");
 	(void)argv;
-	ft_printf("PID : %d\n", getpid());
-	sig_act.sa_handler = signal_handler;
-	sig_act.sa_mask = block_mask;
-	sig_act.sa_flags = SIGINFO;
-	sigaction(SIGUSR1, &sig_act, NULL);
-	sigaction(SIGUSR2, &sig_act, NULL);
-	while (1)
-		pause();
-*/
-	struct sigaction	sa_signal;
-	sigset_t			block_mask;
-
-	if (argc != 1)
-		error("no arguments needed");
-	(void)argv;
-	sigemptyset(&block_mask);
-	sigaddset(&block_mask, SIGINT);
-	sigaddset(&block_mask, SIGQUIT);
-	sa_signal.sa_handler = 0;
-	sa_signal.sa_flags = SA_SIGINFO;
-	sa_signal.sa_mask = block_mask;
-	sa_signal.sa_sigaction = signal_handler;
-	sigaction(SIGUSR1, &sa_signal, NULL);
-	sigaction(SIGUSR2, &sa_signal, NULL);
+	action.sa_sigaction = ft_action;
+	action.sa_flags = SA_SIGINFO;
+	sigemptyset(&action.sa_mask);
+	sigaction(SIGUSR1, &action, NULL);
+	sigaction(SIGUSR2, &action, NULL);
 	ft_printf("PID : %d\n", getpid());
 	while (1)
 		pause();

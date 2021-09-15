@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:11:48 by leo               #+#    #+#             */
-/*   Updated: 2021/09/10 13:02:55 by leo              ###   ########.fr       */
+/*   Updated: 2021/09/15 20:30:13 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-/*pid_t	get_pid(char *nb)
+t_infos	infos = {NULL, 0, 0, 0, 0};
+
+pid_t	get_pid(char *nb)
 {
 	pid_t	pid;
 
@@ -20,7 +22,7 @@
 		error("wrong arguments\nformat : ./client <PID> <message>");
 	pid = ft_atoi(nb);
 	return (pid);
-}*/
+}
 
 static void	send_bit(char letter, int comparator, pid_t pid)
 {
@@ -40,40 +42,80 @@ static void	send_bit(char letter, int comparator, pid_t pid)
 	}
 }
 
-void	send_signals(char *message, pid_t pid)
+void	send_signal(pid_t pid)
 {
-	int		i;
-	int		bitshift;
-	int		comparator;
-
-	i = 0;
-	bitshift = -1;
-	while (message[i])
+	if (!infos.message[infos.i])
 	{
-		while (++bitshift < 8)
+		ft_printf("!c\n");
+		while (++infos.bitshift < 8)
 		{
-			comparator = 0x80 >> bitshift;
-			send_bit(message[i], comparator, pid);
+			kill(pid, SIGUSR1);
+			usleep(100);
+		}	
+		ft_printf("\nmessage sent successfully\n\n");
+		free(&infos);
+		exit(1);
+	}
+	else
+	{
+		if (++infos.bitshift < 8)
+		{
+			ft_printf("infos.bitshift =%d\ninfos.i = %d\ninfos.message[infos.i] = %c\n", infos.bitshift, infos.i, infos.message[infos.i]);
+			infos.comparator = 0x80 >> infos.bitshift;
+			send_bit(infos.message[infos.i], infos.comparator, pid);
 			usleep(100);
 		}
-		i++;
-		bitshift = -1;
+/*		printf("ok\n");
+		if (infos.bitshift == 8)
+		{
+			printf("ok 8\n");
+			infos.i++;
+			infos.bitshift = -1;
+		}*/
 	}
-	while (++bitshift < 8)
+}
+
+void	send_first_signal(char c, pid_t pid)
+{
+	infos.comparator = 0x80 >> infos.bitshift;
+	send_bit(c, infos.comparator, pid);
+	usleep(100);
+}
+
+static void	handler(int sig_num)
+{
+	static int	j = 0;
+
+	if (sig_num == SIGUSR1)
 	{
-		kill(pid, SIGUSR1);
-		usleep(100);
+		j++;
+		ft_printf("bit%d received\n", j);
+		send_signal(infos.pid);
+	}
+	if (sig_num == SIGUSR2)
+	{
+		ft_printf("sigusr2 received\n");
+		infos.i++;
+		infos.bitshift = -1;
+		ft_printf("infos.i = %d\n",infos.i);
+		send_signal(infos.pid);
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	pid_t	pid;
+	struct sigaction action;
 
 	if (argc != 3)
 		error("wrong arguments\nformat : ./client <PID> <message>");
-	pid = ft_atoi(argv[1]);
-	send_signals(argv[2], pid);
-	ft_printf("\nmessage sent successfully\n\n");
+	infos.pid = get_pid(argv[1]);
+	infos.message = argv[2];
+	action.sa_handler = handler;
+	action.sa_flags = SA_SIGINFO;
+	sigemptyset(&action.sa_mask);
+	sigaction(SIGUSR1, &action, NULL);
+	sigaction(SIGUSR2, &action, NULL);
+	ft_printf("infos.message[infos.i]:%c\n", infos.message[infos.i]);
+	send_first_signal(infos.message[infos.i], infos.pid);
 	return (0);
 }
