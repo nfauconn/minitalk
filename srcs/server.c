@@ -1,4 +1,3 @@
-
 #include "minitalk.h"
 
 static char	*init_buff(char c)
