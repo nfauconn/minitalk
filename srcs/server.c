@@ -23,37 +23,32 @@ static void	ft_action(int sig_num, siginfo_t *info, void *context)
 	(void)context;
 	if (info->si_pid)
 		pid = info->si_pid;
+//	if (kill(pid, SIGUSR1) == -1)
+//		error("error while sending aknowledgment of receipt of bit\n");
 	if (sig_num == SIGUSR2)
 		c = c | (0x80 >> bits);
 	else if (sig_num == SIGUSR1)
 		c = c ^ (0x80 >> bits);
 	bits++;
-	ft_printf("pid = %d\n", pid);
-	ft_printf("bits = %d\n", bits);
-	ft_printf("send sigusr1\n");
-	if (!kill(pid, SIGUSR1))
-		error("error while sending aknowledgment of receipt of bit\n");
 	if (bits == 8)
 	{
+		if (kill(pid, SIGUSR2) == -1)
+			error("error while sending aknowledgment of receipt of char\n");
 		if (!buff)
 			buff = init_buff(c);
 		else
 			buff = strfjoinchar(buff, c);
-		ft_printf("buff : %s\n", buff);
-		if (!c)
+		if (c == 0)
 		{
-			ft_printf("good, null recu\n");
 			ft_printf("%s", buff);
+//			ft_memset(buff, 0xFF, ft_strlen(buff));
 			free(buff);
 			buff = NULL;
 		}
 		c = 0xFF;
 		bits = 0;
-		ft_printf("send sigusr2\n");
-		if (!kill(pid, SIGUSR2))
-			error("error while sending aknowledgment of receipt of char\n");
 	}
-	usleep(100);
+	kill(pid, SIGUSR1);
 }
 
 int	main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:11:48 by leo               #+#    #+#             */
-/*   Updated: 2021/09/15 20:30:13 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/16 10:40:10 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,23 @@ pid_t	get_pid(char *nb)
 
 static void	send_bit(char letter, int comparator, pid_t pid)
 {
-	int	kill_exec;
+//	int	kill_exec;
 
 	if (letter & comparator)
 	{
-		kill_exec = kill(pid, SIGUSR2);
-		if (kill_exec == -1)
-			error("error while sending signal\nplease verify PID");
+//		kill_exec = kill(pid, SIGUSR2);
+//		if (kill_exec == -1)
+//			error("error while sending signal\nplease verify PID");
+		kill(pid, SIGUSR2);
+		usleep(100);
 	}
 	else
 	{
-		kill_exec = kill(pid, SIGUSR1);
-		if (kill_exec == -1)
-			error("error while sending signal\nplease verify PID");
+//		kill_exec = kill(pid, SIGUSR1);
+//		if (kill_exec == -1)
+//			error("error while sending signal\nplease verify PID");
+		kill(pid, SIGUSR1);
+		usleep(100);
 	}
 }
 
@@ -53,7 +57,6 @@ void	send_signal(pid_t pid)
 			usleep(100);
 		}	
 		ft_printf("\nmessage sent successfully\n\n");
-		free(&infos);
 		exit(1);
 	}
 	else
@@ -63,15 +66,15 @@ void	send_signal(pid_t pid)
 			ft_printf("infos.bitshift =%d\ninfos.i = %d\ninfos.message[infos.i] = %c\n", infos.bitshift, infos.i, infos.message[infos.i]);
 			infos.comparator = 0x80 >> infos.bitshift;
 			send_bit(infos.message[infos.i], infos.comparator, pid);
-			usleep(100);
 		}
-/*		printf("ok\n");
+//		printf("ok\n");
 		if (infos.bitshift == 8)
 		{
-			printf("ok 8\n");
 			infos.i++;
 			infos.bitshift = -1;
-		}*/
+			ft_printf("infos.i = %d\n",infos.i);
+			send_signal(infos.pid);
+		}
 	}
 }
 
@@ -92,14 +95,14 @@ static void	handler(int sig_num)
 		ft_printf("bit%d received\n", j);
 		send_signal(infos.pid);
 	}
-	if (sig_num == SIGUSR2)
+/*	if (sig_num == SIGUSR2)
 	{
 		ft_printf("sigusr2 received\n");
 		infos.i++;
 		infos.bitshift = -1;
 		ft_printf("infos.i = %d\n",infos.i);
 		send_signal(infos.pid);
-	}
+	}*/
 }
 
 int	main(int argc, char **argv)
