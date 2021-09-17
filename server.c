@@ -31,16 +31,16 @@ static void	ft_action(int sig_num, siginfo_t *info, void *context)
 	bits++;
 	if (bits == 8)
 	{
-		if (kill(pid, SIGUSR2) == -1)
-			error("error while sending aknowledgment of receipt of char\n");
+//		if (kill(pid, SIGUSR2) == -1)
+//			error("error while sending aknowledgment of receipt of char\n");
 		if (!buff)
 			buff = init_buff(c);
 		else
 			buff = strfjoinchar(buff, c);
 		if (c == 0)
 		{
-			ft_printf("%s", buff);
-//			ft_memset(buff, 0xFF, ft_strlen(buff));
+			ft_putstr_fd(buff, 1);
+			kill(pid, SIGUSR2);
 			free(buff);
 			buff = NULL;
 		}
@@ -52,6 +52,8 @@ static void	ft_action(int sig_num, siginfo_t *info, void *context)
 
 int	main(int argc, char **argv)
 {
+	int	pid;
+	char	*pid_str;
 	struct sigaction action;
 
 	if (argc != 1)
@@ -62,7 +64,10 @@ int	main(int argc, char **argv)
 	sigemptyset(&action.sa_mask);
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
-	ft_printf("PID : %d\n", getpid());
+	pid = getpid();
+	pid_str = ft_itoa(pid);
+	ft_putstr_fd(pid_str, 1);
+	ft_putstr_fd("\n", 1);
 	while (1)
 		pause();
 }

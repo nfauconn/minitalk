@@ -1,6 +1,6 @@
 #include "minitalk.h"
 
-t_infos	infos = {NULL, 0, 0, 0, 0};
+t_infos	infos = {NULL, 0, 0, 0, 0, 0};
 
 pid_t	get_pid(char *nb)
 {
@@ -14,22 +14,27 @@ pid_t	get_pid(char *nb)
 
 static void	send_bit(char letter, int comparator, pid_t pid)
 {
-//	int	kill_exec;
-
+	if (letter == 0 && comparator == 0)
+	{
+		while (++infos.bitshift < 8)
+		{
+			kill(pid, SIGUSR1);
+			usleep(100);
+		}
+		return ;
+	}
 	if (letter & comparator)
 	{
-//		kill_exec = kill(pid, SIGUSR2);
-//		if (kill_exec == -1)
-//			error("error while sending signal\nplease verify PID");
-		kill(pid, SIGUSR2);
+		infos.kill_exec = kill(pid, SIGUSR2);
+		if (infos.kill_exec == -1)
+			error("error while sending signal\nplease verify PID");
 		usleep(100);
 	}
 	else
 	{
-//		kill_exec = kill(pid, SIGUSR1);
-//		if (kill_exec == -1)
-//			error("error while sending signal\nplease verify PID");
-		kill(pid, SIGUSR1);
+		infos.kill_exec = kill(pid, SIGUSR1);
+		if (infos.kill_exec == -1)
+			error("error while sending signal\nplease verify PID");
 		usleep(100);
 	}
 }
@@ -37,30 +42,18 @@ static void	send_bit(char letter, int comparator, pid_t pid)
 void	send_signal(pid_t pid)
 {
 	if (!infos.message[infos.i])
-	{
-		ft_printf("!c\n");
-		while (++infos.bitshift < 8)
-		{
-			kill(pid, SIGUSR1);
-			usleep(100);
-		}	
-		ft_printf("\nmessage sent successfully\n\n");
-		exit(1);
-	}
+		send_bit(0, 0, pid);
 	else
 	{
 		if (++infos.bitshift < 8)
 		{
-			ft_printf("infos.bitshift =%d\ninfos.i = %d\ninfos.message[infos.i] = %c\n", infos.bitshift, infos.i, infos.message[infos.i]);
 			infos.comparator = 0x80 >> infos.bitshift;
 			send_bit(infos.message[infos.i], infos.comparator, pid);
 		}
-//		printf("ok\n");
 		if (infos.bitshift == 8)
 		{
 			infos.i++;
 			infos.bitshift = -1;
-			ft_printf("infos.i = %d\n",infos.i);
 			send_signal(infos.pid);
 		}
 	}
@@ -80,17 +73,13 @@ static void	handler(int sig_num)
 	if (sig_num == SIGUSR1)
 	{
 		j++;
-		ft_printf("bit%d received\n", j);
 		send_signal(infos.pid);
 	}
-/*	if (sig_num == SIGUSR2)
+	if (sig_num == SIGUSR2)
 	{
-		ft_printf("sigusr2 received\n");
-		infos.i++;
-		infos.bitshift = -1;
-		ft_printf("infos.i = %d\n",infos.i);
-		send_signal(infos.pid);
-	}*/
+		ft_putstr_fd("\nmessage sent successfully\n\n", 1);
+		exit(1);
+	}
 }
 
 int	main(int argc, char **argv)
@@ -106,7 +95,8 @@ int	main(int argc, char **argv)
 	sigemptyset(&action.sa_mask);
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
-	ft_printf("infos.message[infos.i]:%c\n", infos.message[infos.i]);
 	send_first_signal(infos.message[infos.i], infos.pid);
+	while (1)
+		pause();
 	return (0);
 }

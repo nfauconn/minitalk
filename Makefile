@@ -1,58 +1,40 @@
 NAME = minitalk
-LIBFT = libft/
-LIBFT_PRINTF = ./libft/srcs/ft_printf/
-LIB = libft/libft.a libft/srcs/ft_printf/libftprintf.a
-OBJ_LIB = libft/srcs/ft_printf/objs libft/objs
 SERVER = server
 CLIENT = client
-CC = clang
-INCLUDES = -I includes/ -I libft/includes/ -I libft/srcs/ft_printf/includes
+CC = gcc
 CFLAGS	= -Wall -Wextra -Werror
 
-FILES_SERVER = server.c
-FILES_CLIENT = client.c
-FILES_SHARED = error.c
+SRCS_SERVER = server.c
+SRCS_CLIENT = client.c
+SRCS_SHARED = minitalk_utils.c minitalk_utils1.c
 
-SRCS_SERVER = ${addprefix ${SRC_DIR}/,${FILES_SERVER}}
-SRCS_CLIENT = ${addprefix ${SRC_DIR}/,${FILES_CLIENT}}
-SRCS_SHARED = ${addprefix ${SRC_DIR}/,${FILES_SHARED}}
-
-OBJS_SERVER = ${addprefix ${OBJ_DIR}/,${FILES_SERVER:.c=.o}}
-OBJS_CLIENT = ${addprefix ${OBJ_DIR}/,${FILES_CLIENT:.c=.o}}
-OBJS_SHARED = ${addprefix ${OBJ_DIR}/,${FILES_SHARED:.c=.o}}
-
-SRC_DIR  = ./srcs
-OBJ_DIR  = ./objs
+OBJS_SERVER = ${SRCS_SERVER:.c=.o}
+OBJS_CLIENT = ${SRCS_CLIENT:.c=.o}
+OBJS_SHARED = ${SRCS_SHARED:.c=.o}
 
 all: ${NAME}
 
-${NAME}: makelibs ${SERVER} ${CLIENT}
+${NAME}: ${SERVER} ${CLIENT}
 
-makelibs: 
-	@make -C ${LIBFT}
-	@make -C ${LIBFT_PRINTF}
-
-${SERVER}: ${OBJS_SERVER} ${OBJS_SHARED}
-	@${CC} -g ${CFLAGS} ${INCLUDES} ${LIB} ${OBJS_SERVER} ${OBJS_SHARED} -o ${SERVER}
+${SERVER}: ${OBJS_SHARED} ${OBJS_SERVER}
+	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS_SERVER} ${OBJS_SHARED} -o ${SERVER}
 	@echo "${SERVER} created"
 
-${CLIENT}: ${OBJS_CLIENT} ${OBJS_SHARED}
-	@${CC} ${CFLAGS} ${INCLUDES} ${LIB} ${OBJS_CLIENT} ${OBJS_SHARED} -o ${CLIENT}
+${CLIENT}: ${OBJS_SHARED} ${OBJS_CLIENT}
+	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS_CLIENT} ${OBJS_SHARED} -o ${CLIENT}
 	@echo "${CLIENT} created"
 
-${OBJ_DIR}/%.o:${SRC_DIR}/%.c
-	@mkdir -p ${OBJ_DIR}
+.c.o:
 	@echo create: ${@:%=%}
-	@${CC} -o $@ -c $< ${CFLAGS} ${INCLUDES}
+	@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 clean:
-	@rm -rf ${OBJ_DIR} ${OBJ_LIB}
+	@rm -rf ${OBJ_DIR}
 	@echo "objs deleted"
 
 fclean: clean
 	@rm -rf ${SERVER} ${CLIENT}
 	@echo "server and client deleted"
-	@make fclean -C ${LIBFT}
 
 re: fclean all
 
