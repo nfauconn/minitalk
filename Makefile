@@ -1,32 +1,30 @@
-NAME = minitalk
-SERVER = server
-CLIENT = client
-CC = gcc
-CFLAGS	= -Wall -Wextra -Werror
+NAME := minitalk
+SERVER := server
+CLIENT := client
+CC := gcc
+CFLAGS	:= -Wall -Wextra -Werror
 
-SRCS_SERVER = server.c
-SRCS_CLIENT = client.c
-SRCS_SHARED = minitalk_utils.c minitalk_utils1.c
+SRCS_SERVER := server.c minitalk_utils.c minitalk_utils1.c
+SRCS_CLIENT := client.c minitalk_utils.c minitalk_utils1.c
 
-OBJS_SERVER = ${SRCS_SERVER:.c=.o}
-OBJS_CLIENT = ${SRCS_CLIENT:.c=.o}
-OBJS_SHARED = ${SRCS_SHARED:.c=.o}
+OBJS_SERVER := ${SRCS_SERVER:.c:=.o}
+OBJS_CLIENT := ${SRCS_CLIENT:.c:=.o}
 
 all: ${NAME}
 
 ${NAME}: ${SERVER} ${CLIENT}
 
-${SERVER}: ${OBJS_SHARED} ${OBJS_SERVER}
-	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS_SERVER} ${OBJS_SHARED} -o ${SERVER}
+${SERVER}: ${OBJS_SERVER} minitalk.h
+	${CC} ${OBJS_SERVER} -o ${SERVER}
 	@echo "${SERVER} created"
 
-${CLIENT}: ${OBJS_SHARED} ${OBJS_CLIENT}
-	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS_CLIENT} ${OBJS_SHARED} -o ${CLIENT}
+${CLIENT}: ${OBJS_CLIENT} minitalk.h
+	${CC} ${OBJS_CLIENT} -o ${CLIENT}
 	@echo "${CLIENT} created"
 
-.c.o:
-	@echo create: ${@:%=%}
-	@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+%.c: %.o
+	echo create: ${@:%:=%}
+	@${CC} -g -c -o ${<:.c:=.o} $< ${CFLAGS}
 
 clean:
 	@rm -rf ${OBJ_DIR}

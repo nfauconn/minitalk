@@ -1,7 +1,5 @@
 {
     "files.associations": {
-        "libft.h": "c",
-        "get_next_line.h": "c",
-        "unistd.h": "c"
+        "signal.h": "c"
     }
 }

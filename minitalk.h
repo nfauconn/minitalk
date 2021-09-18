@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 17:10:50 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/18 11:30:00 by leo              ###   ########.fr       */
+/*   Created: 2021/09/18 16:21:57 by user42            #+#    #+#             */
+/*   Updated: 2021/09/18 16:36:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define MINITALK_H
 
 # include <signal.h>
-# include <unistd.h>
 # include <stdlib.h>
+# include <sys/types.h>
+# include <unistd.h>
 
 typedef struct s_infos
 {

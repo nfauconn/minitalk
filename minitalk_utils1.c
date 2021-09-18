@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/15 23:29:15 by nfauconn          #+#    #+#             */
-/*   Updated: 2021/09/18 11:43:01 by leo              ###   ########.fr       */
+/*   Created: 2021/09/18 16:20:52 by user42            #+#    #+#             */
+/*   Updated: 2021/09/18 18:50:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	error(char *s)
 	if (s)
 	{
 		ft_putstr_fd("\n", 2);
-		ft_putstr_fd(s, 2);
 		ft_putstr_fd("\n", 2);
+		ft_putstr_fd(s, 2);
 		ft_putstr_fd("\n", 2);
 	}
 	exit(EXIT_FAILURE);
@@ -60,8 +60,8 @@ void	error_server(char *s, char **str)
 	if (s)
 	{
 		ft_putstr_fd("\n", 2);
-		ft_putstr_fd(s, 2);
 		ft_putstr_fd("\n", 2);
+		ft_putstr_fd(s, 2);
 		ft_putstr_fd("\n", 2);
 	}
 	if (*str)
