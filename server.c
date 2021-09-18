@@ -12,42 +12,49 @@ static char	*init_buff(char c)
 	return (buff);
 }
 
+static void	fill_buff(char **buff, char c, pid_t pid, int kill_exec)
+{
+	if (!*buff)
+		*buff = init_buff(c);
+	else
+		*buff = strfjoinchar(*buff, c);
+	if (c == 0)
+	{
+		ft_putstr_fd(*buff, 1);
+		kill_exec = kill(pid, SIGUSR2);
+		if (kill_exec == -1)
+			error_server("error while sending aknowledgment of receipt of bit\n", buff);
+		free(*buff);
+		*buff = NULL;
+
+	}
+}
+
 static void	ft_action(int sig_num, siginfo_t *info, void *context)
 {
-	static char	c = 0xFF;
-	static int	bits = 0;
-	static int	pid = 0;
-	static char	*buff;
+	static char		c = 0xFF;
+	static int		bits = 0;
+	static pid_t	pid = 0;
+	static char		*buff;
+	int				kill_exec;
 
 	(void)context;
 	if (info->si_pid)
 		pid = info->si_pid;
-//	if (kill(pid, SIGUSR1) == -1)
-//		error("error while sending aknowledgment of receipt of bit\n");
 	if (sig_num == SIGUSR2)
 		c = c | (0x80 >> bits);
 	else if (sig_num == SIGUSR1)
 		c = c ^ (0x80 >> bits);
 	bits++;
+	kill_exec = kill(pid, SIGUSR1);
+	if (kill_exec == -1)
+		error_server("error while sending aknowledgment of receipt of bit\n", &buff);
 	if (bits == 8)
 	{
-//		if (kill(pid, SIGUSR2) == -1)
-//			error("error while sending aknowledgment of receipt of char\n");
-		if (!buff)
-			buff = init_buff(c);
-		else
-			buff = strfjoinchar(buff, c);
-		if (c == 0)
-		{
-			ft_putstr_fd(buff, 1);
-			kill(pid, SIGUSR2);
-			free(buff);
-			buff = NULL;
-		}
+		fill_buff(&buff, c, pid, kill_exec);
 		c = 0xFF;
 		bits = 0;
 	}
-	kill(pid, SIGUSR1);
 }
 
 int	main(int argc, char **argv)
