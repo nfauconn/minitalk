@@ -6,11 +6,13 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:20:59 by user42            #+#    #+#             */
-/*   Updated: 2021/09/18 19:05:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/18 22:57:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+#include <stdio.h>
 
 /*static char	*init_buff(char c)
 {
@@ -40,7 +42,7 @@ static void	display(char c, pid_t pid, int kill_exec)
 //		ft_putstr_fd(*buff, 1);
 		kill_exec = kill(pid, SIGUSR2);
 		if (kill_exec == -1)
-			error("error while sending aknowledgment of receipt\n");
+			error("error while sending aknowledgment of receipt");
 		usleep(50);
 /*			error_server("error while sending aknowledgment of receipt\n", buff);
 		free(*buff);
@@ -59,26 +61,23 @@ static void	ft_action(int sig_num, siginfo_t *info, void *context)
 	(void)context;
 	if (info->si_pid)
 		pid = info->si_pid;
-	else
-		ft_putstr_fd("error\n", 1);
 	if (sig_num == SIGUSR2)
 		c = c | (0x80 >> bits);
 	else if (sig_num == SIGUSR1)
 		c = c ^ (0x80 >> bits);
 	bits++;
-
+	printf("bits : %d\n", bits);
 	if (bits == 8)
 	{
-		kill_exec = kill(pid, SIGUSR1);
-		if (kill_exec == -1)
-			error("error while sending aknowledgment of receipt\n");
-		usleep(50);
 		display(c, pid, kill_exec);
 //		fill_buff(&buff, c, pid, kill_exec);
 		c = 0xFF;
 		bits = 0;
-
-//			error_server("error while sending aknowledgment of receipt\n", &buff);
+		kill_exec = kill(pid, SIGUSR1);
+		if (kill_exec == -1)
+			error("error while sending aknowledgment of receipt");
+		usleep(50);
+//		error_server("error while sending aknowledgment of receipt\n", &buff);
 	}
 }
 

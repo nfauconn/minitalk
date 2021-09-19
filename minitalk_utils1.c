@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:20:52 by user42            #+#    #+#             */
-/*   Updated: 2021/09/18 18:50:18 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/19 00:25:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	error(char *s)
 		ft_putstr_fd("\n", 2);
 		ft_putstr_fd(s, 2);
 		ft_putstr_fd("\n", 2);
+		ft_putstr_fd("\n", 2);
 	}
 	exit(EXIT_FAILURE);
 }
@@ -62,6 +63,7 @@ void	error_server(char *s, char **str)
 		ft_putstr_fd("\n", 2);
 		ft_putstr_fd("\n", 2);
 		ft_putstr_fd(s, 2);
+		ft_putstr_fd("\n", 2);
 		ft_putstr_fd("\n", 2);
 	}
 	if (*str)

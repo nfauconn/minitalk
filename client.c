@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:21:34 by user42            #+#    #+#             */
-/*   Updated: 2021/09/18 19:03:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/19 00:24:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ static void	handler(int sig_num)
 		printf("\nchar %d received\n\n", g_infos.i);
 		send_signal(g_infos.pid);
 	}
-	if (sig_num == SIGUSR2)
+	else if (sig_num == SIGUSR2)
 	{
 		ft_putstr_fd("\n\nmessage sent successfully\n", 1);
 		exit(1);
