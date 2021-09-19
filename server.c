@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:20:59 by user42            #+#    #+#             */
-/*   Updated: 2021/09/18 22:57:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/19 10:08:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <stdio.h>
 
-/*static char	*init_buff(char c)
+static char	*init_buff(char c)
 {
 	char	*buff;
 
@@ -24,30 +24,24 @@
 	buff[0] = c;
 	buff[1] = '\0';
 	return (buff);
-}*/
+}
 
-//static void	fill_buff(char **buff, char c, pid_t pid, int kill_exec)
-static void	display(char c, pid_t pid, int kill_exec)
+static void	fill_buff(char **buff, char c, pid_t pid, int kill_exec)
 {
-/*	if (!*buff)
+	if (!*buff)
 		*buff = init_buff(c);
 	else
-		*buff = strfjoinchar(*buff, c);
-*/	
-	write(1, &c, 1);
+		*buff = strfjoinchar(*buff, c);	
 	if (c == 0)
 	{
-		ft_putstr_fd("END\n", 1);
-
-//		ft_putstr_fd(*buff, 1);
-		kill_exec = kill(pid, SIGUSR2);
-		if (kill_exec == -1)
-			error("error while sending aknowledgment of receipt");
-		usleep(50);
-/*			error_server("error while sending aknowledgment of receipt\n", buff);
+		ft_putstr_fd(*buff, 1);
 		free(*buff);
 		*buff = NULL;
-*/	}
+		kill_exec = kill(pid, SIGUSR2);
+		usleep(50);
+		if (kill_exec == -1)
+			error_server("error while sending aknowledgment of receipt\n", buff);
+	}
 }
 
 static void	ft_action(int sig_num, siginfo_t *info, void *context)
@@ -66,18 +60,15 @@ static void	ft_action(int sig_num, siginfo_t *info, void *context)
 	else if (sig_num == SIGUSR1)
 		c = c ^ (0x80 >> bits);
 	bits++;
-	printf("bits : %d\n", bits);
 	if (bits == 8)
 	{
-		display(c, pid, kill_exec);
-//		fill_buff(&buff, c, pid, kill_exec);
+		fill_buff(&buff, c, pid, kill_exec);
 		c = 0xFF;
 		bits = 0;
 		kill_exec = kill(pid, SIGUSR1);
-		if (kill_exec == -1)
-			error("error while sending aknowledgment of receipt");
 		usleep(50);
-//		error_server("error while sending aknowledgment of receipt\n", &buff);
+		if (kill_exec == -1)
+			error_server("error while sending aknowledgment of receipt\n", &buff);
 	}
 }
 
