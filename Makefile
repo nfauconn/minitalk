@@ -27,7 +27,7 @@ ${CLIENT}: ${OBJS_CLIENT} minitalk.h
 	@${CC} -g -c -o ${<:.c:=.o} $< ${CFLAGS}
 
 clean:
-	@rm -rf ${OBJ_DIR}
+	@rm -rf *.o
 	@echo "objs deleted"
 
 fclean: clean
