@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:20:59 by user42            #+#    #+#             */
-/*   Updated: 2021/09/20 14:05:13 by nfauconn         ###   ########.fr       */
+/*   Updated: 2021/09/20 14:58:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-
-#include <stdio.h>
 
 static void	send_sig(pid_t pid, int sig)
 {
@@ -22,6 +19,14 @@ static void	send_sig(pid_t pid, int sig)
 	kill_exec = kill(pid, sig);
 	if (kill_exec == -1)
 		error("error while sending AR");
+}
+
+static void	end_msg(char *c, int *bit, int *pid)
+{
+	send_sig(*pid, SIGUSR2);
+	*c = 0xFF;
+	*bit = 0;
+	*pid = 0;
 }
 
 static void	ft_action(int sig_num, siginfo_t *info, void *context)
@@ -42,11 +47,7 @@ static void	ft_action(int sig_num, siginfo_t *info, void *context)
 	{
 		if (c == 0)
 		{
-//			ft_putstr_fd("null received - send sig2\n", 1);
-			send_sig(pid, SIGUSR2);
-			c = 0xFF;
-			bit = 0;
-			pid = 0;
+			end_msg(&c, &bit, &pid);
 			return ;
 		}
 		write(1, &c, 1);
@@ -55,7 +56,6 @@ static void	ft_action(int sig_num, siginfo_t *info, void *context)
 	}
 	send_sig(pid, SIGUSR1);
 }
-	
 
 int	main(int argc, char **argv)
 {

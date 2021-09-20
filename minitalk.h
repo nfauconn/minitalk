@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:21:57 by user42            #+#    #+#             */
-/*   Updated: 2021/09/20 12:20:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/20 14:36:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ typedef struct s_infos
 	pid_t	pid;
 	int		i;
 	int		bitshift;
-	int		comparator;
-	int		kill_exec;
 }	t_infos;
 
 void	error(char *s);
