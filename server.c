@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nfauconn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:20:59 by user42            #+#    #+#             */
-/*   Updated: 2021/09/20 13:10:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/20 14:05:13 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	ft_action(int sig_num, siginfo_t *info, void *context)
 	{
 		if (c == 0)
 		{
-			ft_putstr_fd("send sig2\n", 1);
+//			ft_putstr_fd("null received - send sig2\n", 1);
 			send_sig(pid, SIGUSR2);
 			c = 0xFF;
 			bit = 0;

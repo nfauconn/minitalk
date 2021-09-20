@@ -63,9 +63,11 @@ static void	handler(int sig_num)
 		{
 			ft_putstr_fd("send null\n", 1);
 			while (++g.bitshift <= 8)
+			{
+				printf("send null bit %d\n", g.bitshift);
 				send_sig(g.pid, SIGUSR1);
-			while (1)
-				pause();
+				return ;
+			}
 		}
 		else
 		{
