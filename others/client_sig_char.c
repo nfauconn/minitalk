@@ -1,31 +1,18 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_sig_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:21:34 by user42            #+#    #+#             */
-/*   Updated: 2021/09/19 17:51:46 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/19 18:12:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-#include <stdio.h>
-#include <stdint.h>
-#include <sys/time.h>
-uint64_t micros() {
-    struct timeval tv;
-    gettimeofday(&tv,NULL);
-    return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
-}
-uint64_t t1;
-uint64_t t2;
-
-t_infos	g = {NULL, 0, 0, 0, 0, 0};
-
+t_infos	g_infos = {NULL, 0, 0, -1, 0, 0};
 
 pid_t	get_pid(char *nb)
 {
@@ -37,52 +24,43 @@ pid_t	get_pid(char *nb)
 	return (pid);
 }
 
-static void	send_sig(pid_t pid, int sig)
+static void	send_bit(int sig, pid_t pid)
 {
-	int	kill_exec;
-
-	kill_exec = kill(pid, sig);
-	if (kill_exec == -1)
+	g_infos.kill_exec = kill(pid, sig);
+	usleep(50);
+	if (g_infos.kill_exec == -1)
 		error("error while sending signal\nplease verify PID");
 }
 
-static void	send_first_signal(pid_t pid)
+void	send_signal(pid_t pid)
 {
-	g.comparator = 0x80 >> g.bitshift;
-	if (g.message[g.i] & g.comparator)
-		send_sig(pid, SIGUSR2);
+	if (!g_infos.message[g_infos.i])
+	{
+		while (++g_infos.bitshift < 8)
+			send_bit(SIGUSR1, g_infos.pid);
+	}
 	else
-		send_sig(pid, SIGUSR1);
+	{
+		while (++g_infos.bitshift < 8)
+		{
+			g_infos.comparator = 0x80 >> g_infos.bitshift;
+			if (g_infos.message[g_infos.i] & g_infos.comparator)
+				send_bit(SIGUSR2, g_infos.pid);
+			else
+				send_bit(SIGUSR1, g_infos.pid);
+		}
+		g_infos.i++;
+		g_infos.bitshift = -1;
+	}
 }
 
 static void	handler(int sig_num)
 {
 	if (sig_num == SIGUSR1)
+		send_signal(g_infos.pid);
+	else if (sig_num == SIGUSR2)
 	{
-		if (!g.message[g.i])
-		{
-			ft_putstr_fd("send null\n", 1);
-			while (++g.bitshift <= 8)
-				send_sig(g.pid, SIGUSR1);
-			while (1)
-				pause();
-		}
-		else
-		{
-			if (++g.bitshift >= 8)
-			{
-				g.i++;
-				g.bitshift = 0;
-			}
-			g.comparator = 0x80 >> g.bitshift;
-			if (g.message[g.i] & g.comparator)
-				send_sig(g.pid, SIGUSR2);
-			else
-				send_sig(g.pid, SIGUSR1);
-		}
-	}
-	if (sig_num == SIGUSR2)
-	{
+        usleep(50);
 		ft_putstr_fd("\n\nmessage sent successfully\n\n", 1);
 		exit(1);
 	}
@@ -94,20 +72,17 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 		error("wrong arguments\nformat : ./client <PID> <message>");
-	g.pid = get_pid(argv[1]);
-	g.message = argv[2];
+	g_infos.pid = get_pid(argv[1]);
+	g_infos.message = argv[2];
 	action.sa_handler = handler;
 	action.sa_flags = SA_SIGINFO;
 	sigemptyset(&action.sa_mask);
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
-	send_first_signal(g.pid);
+	send_signal(g_infos.pid);
 	while (1)
-	{
-//		ft_putstr_fd("\npause...\n", 1);
 		pause();
-	}
 	return (0);
 }
 
-//	printf("t1: %ld\n", t1);
+//essayer tout dans le hhandler

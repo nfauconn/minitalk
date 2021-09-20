@@ -15,11 +15,11 @@ all: ${NAME}
 ${NAME}: ${SERVER} ${CLIENT}
 
 ${SERVER}: ${OBJS_SERVER} minitalk.h
-	${CC} ${OBJS_SERVER} -o ${SERVER}
+	${CC} ${CFLAGS} ${OBJS_SERVER} -o ${SERVER}
 	@echo "${SERVER} created"
 
 ${CLIENT}: ${OBJS_CLIENT} minitalk.h
-	${CC} ${OBJS_CLIENT} -o ${CLIENT}
+	${CC} ${CFLAGS} ${OBJS_CLIENT} -o ${CLIENT}
 	@echo "${CLIENT} created"
 
 %.c: %.o
