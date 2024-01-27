@@ -1,0 +1,4 @@
+.vscode
+Project/*.o
+Project/server
+Project/client
