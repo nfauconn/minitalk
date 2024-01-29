@@ -6,7 +6,7 @@
 /*   By: nfauconn <nfauconn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:20:35 by nfauconn          #+#    #+#             */
-/*   Updated: 2024/01/27 15:54:39 by nfauconn         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:09:34 by nfauconn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_itoa(int num)
 	int		i;
 
 	count = ft_nbrlen_base(num, 10);
-	str = (char *)malloc((count + 1) * sizeof (char));
+	str = malloc((count + 1) * sizeof (char));
 	if (!str)
 		return (NULL);
 	i = count - 1;
@@ -107,7 +107,7 @@ char	*strfjoinchar(char *str, char c)
 	char	*new_str;
 	int		i;
 
-	new_str = (char *)malloc(sizeof(char) * (ft_strlen(str) + 2));
+	new_str = malloc(sizeof(char) * (ft_strlen(str) + 2));
 	if (!new_str)
 	{
 		free(str);
