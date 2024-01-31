@@ -10,8 +10,8 @@
 A client and server communication program using UNIX signals, focusing on handling multiple client requests and efficient message transmission through bit-by-bit communication (binary operations).
 
 
-| Program name | `server` and `client` |
 | -- | -- |
+| Program name | `server` and `client` |
 **Language** | C
 **Authorized functions** | `write` `signal` `sigemptyset` `sigaddset` `sigaction` `kill` `getpid` `malloc` `free` `pause` `sleep` `usleep` `exit`
 **Authorized UNIX signals** |`SIGUSR1` and `SIGUSR2`
