@@ -9,7 +9,7 @@
 
 A client and server communication program using UNIX signals, focusing on handling multiple client requests and efficient message transmission through bit-by-bit communication (binary operations).
 
-
+|||
 | -- | -- |
 | Program name | `server` and `client` |
 **Language** | C
