@@ -3,7 +3,7 @@
 
 # Minitalk
 
-*Binary Communication and Bitwise Operations* • *Signal Handling and Inter-Process Communication* • *Error Handling* • *Synchronization and Timing* • *Resource Management* • *Low-Level Programming Proficiency*
+*C programming language* •*Binary Communication and Bitwise Operations* • *Signal Handling and Inter-Process Communication* • *Error Handling* • *Synchronization and Timing* • *Resource Management* • *Low-Level Programming Proficiency*
 
 ## Description
 
@@ -15,6 +15,7 @@ A client and server communication program using UNIX signals, focusing on handli
 **Language** | C
 **Authorized functions** | `write` `signal` `sigemptyset` `sigaddset` `sigaction` `kill` `getpid` `malloc` `free` `pause` `sleep` `usleep` `exit`
 **Authorized UNIX signals** |`SIGUSR1` and `SIGUSR2`
+**Authorized Global Variables** | 1
 
 - The server is able to receive strings from several clients in a row without needing to restart.
 - The server acknowledges every message received by sending back a signal to the client.
