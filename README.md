@@ -3,7 +3,7 @@
 
 # Minitalk
 
-*C programming language* •*Binary Communication and Bitwise Operations* • *Signal Handling and Inter-Process Communication* • *Error Handling* • *Synchronization and Timing* • *Resource Management* • *Low-Level Programming Proficiency*
+*C programming language* • *Binary Communication and Bitwise Operations* • *Signal Handling and Inter-Process Communication* • *Error Handling* • *Synchronization and Timing* • *Resource Management* • *Low-Level Programming Proficiency*
 
 ## Description
 

@@ -1,7 +1,7 @@
 [![en](https://img.shields.io/badge/lang-en-pink.svg)](https://github.com/nfauconn/minitalk/blob/master/README.md)
 [![fr](https://img.shields.io/badge/lang-fr-purple.svg)](https://github.com/nfauconn/minitalk/blob/master/README.fr.md)
 
-*Langage de programmation C* •*Communication binaire et opérations bit à bit* • *Gestion des signaux et communication inter-processus* • *Gestion des erreurs* • *Synchronisation et temporisation* • *Gestion des ressources* • *Programmation de bas niveau*
+*Langage de programmation C* • *Communication binaire et opérations bit à bit* • *Gestion des signaux et communication inter-processus* • *Gestion des erreurs* • *Synchronisation et temporisation* • *Gestion des ressources* • *Programmation de bas niveau*
 
 # Minitalk
 
