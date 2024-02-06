@@ -25,7 +25,7 @@ Un programme de communication client-serveur utilisant les signaux UNIX, se conc
 
 ```shell
 git clone git@github.com:nfauconn/minitalk.git
-cd minitalk/Projet
+cd minitalk/Project
 make
 ```
 
